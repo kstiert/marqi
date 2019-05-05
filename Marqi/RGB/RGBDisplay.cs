@@ -1,9 +1,9 @@
-﻿using Marqi.RGB;
+﻿using Marqi.Display;
 using System.Collections.Generic;
 
-namespace Marqi
+namespace Marqi.RGB
 {
-    public class RGBDisplay : IDisplay
+    public class RGBDisplay : DisplayBase
     {
         private readonly List<RGBLedFont> _fonts = new List<RGBLedFont>();
         private readonly RGBLedMatrix _matrix;
@@ -20,33 +20,33 @@ namespace Marqi
             _canvas = _matrix.CreateOffscreenCanvas();
         }
 
-        public void Clear()
+        public override void Clear()
         {
             _canvas.Clear();
         }
 
-        public void Fill(Color color)
+        public override void Fill(Color color)
         {
             _canvas.Fill(color);
         }
 
-        public void SetPixel(int x, int y, Color color)
+        public override void SetPixel(int x, int y, Color color)
         {
             _canvas.SetPixel(x, y, color);
         }
 
-        public Font LoadFont(string file)
+        public override Font LoadFont(string file)
         {
             _fonts.Add(new RGBLedFont(file));
             return new Font(_fonts.Count - 1);
         }
 
-        public void DrawText(Font font, int x, int y, Color color, string text, int spacing = 0, bool vertical = false)
+        public override void DrawText(Font font, int x, int y, Color color, string text, int spacing = 0, bool vertical = false)
         {
             _canvas.DrawText(_fonts[font.Id], x, y, color, text, spacing, vertical);
         }
 
-        public void Swap()
+        public override void Swap()
         {
             _matrix.SwapOnVsync(_canvas);
         }
