@@ -33,6 +33,7 @@ namespace Marqi.Display
                     widget.Render(this);
                 }
                 Swap();
+                Clear();
             }
         }
 

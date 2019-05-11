@@ -2,8 +2,10 @@
 
 namespace Marqi.Data
 {
-    interface IDataSource<T>
+    public interface IDataSource<T>
     {
         Action<T> Update { get; set; }
+
+        void Refresh();
     }
 }

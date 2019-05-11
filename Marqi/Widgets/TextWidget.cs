@@ -5,6 +5,8 @@ namespace Marqi.Widgets
 {
     public class TextWidget : WidgetBase
     {
+        public Color Color { get; set; }
+
         public Font Font { get; set; }
 
         private string _text;
@@ -23,7 +25,7 @@ namespace Marqi.Widgets
 
         public override void Render(IDisplay display)
         {
-            display.DrawText(Font, Position.X, Position.Y, new Color(255, 0, 0), Text);
+            display.DrawText(Font, Position.X, Position.Y, Color, Text);
         }
     }
 }
