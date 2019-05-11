@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.IO;
 using System.Text.RegularExpressions;
-
+#pragma warning disable IDE1006 // Naming Styles
 namespace Orvid.Graphics.FontSupport.bdf
 {
     public class BDFParser
@@ -58,6 +58,7 @@ namespace Orvid.Graphics.FontSupport.bdf
                 return major;
             }
 
+
             public int getMinor()
             {
                 return minor;
@@ -70,7 +71,7 @@ namespace Orvid.Graphics.FontSupport.bdf
         }
         #endregion
 
-        StreamReader inStream;
+        private readonly StreamReader inStream;
 
         #region Actual Implementation
         public BDFFontContainer CreateFont()
@@ -80,18 +81,16 @@ namespace Orvid.Graphics.FontSupport.bdf
 
         public BDFFontContainer LoadFont()
         {
-            BDFFontContainer font = null;
-            int[] version = null;
+            BDFFontContainer font;
+            int[] version;
             List<String> comments = new List<string>();
             String[] fontName = null;
             int[] size = null;
             int[] bBox = null;
-            int contentVersion = 0;
-            int metrics = 0;
             List<String> properties = new List<string>();
             List<BDFGlyph> chars = new List<BDFGlyph>();
             FontStyle style = FontStyle.Normal;
-            string s = "";
+            string s;
 
             s = inStream.ReadLine();
             if (s.Substring(0, 9).ToLower() == "startfont")
@@ -165,7 +164,7 @@ namespace Orvid.Graphics.FontSupport.bdf
                             {
                                 System.GC.Collect();
                                 s = inStream.ReadLine();
-                                BDFGlyph g = null;
+                                BDFGlyph g;
                                 
                                 if (s.Length < 9 || s.Substring(0, 9).ToLower() != "startchar")
                                 {
@@ -288,21 +287,23 @@ namespace Orvid.Graphics.FontSupport.bdf
                         {
                             if (s.Substring(0, 7).ToLower() == "comment")
                             {
-                                comments.Add(s.Substring(9, (s.Length - 10)));
+                                try
+                                {
+                                    comments.Add(s.Substring(9, (s.Length - 10)));
+                                }
+                                catch { }
                                 continue;
                             }
                             else if (s.Length > 10)
                             {
                                 if (s.Substring(0, 10).ToLower() == "metricset")
                                 {
-                                    metrics = int.Parse(s.Substring(11,1));
                                     continue;
                                 }
                                 else if (s.Length > 14)
                                 {
                                     if (s.Substring(0, 14).ToLower() == "contentversion")
                                     {
-                                        contentVersion = int.Parse(s.Substring(15));
                                         continue;
                                     }
                                     else if (s.Length > 15)
@@ -359,3 +360,4 @@ namespace Orvid.Graphics.FontSupport.bdf
         }
     }
 }
+#pragma warning restore IDE1006 // Naming Styles

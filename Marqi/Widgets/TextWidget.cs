@@ -1,8 +1,5 @@
 ﻿using Marqi.Display;
 using Marqi.RGB;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Marqi.Widgets
 {
@@ -26,7 +23,7 @@ namespace Marqi.Widgets
 
         public override void Render(IDisplay display)
         {
-            display.DrawText(Font, 0, 15, new Color(255, 0, 0), Text);
+            display.DrawText(Font, Position.X, Position.Y, new Color(255, 0, 0), Text);
         }
     }
 }

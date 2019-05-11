@@ -1,15 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Marqi.Tester
 {
     public class MarqiGame : Game
     {
         private readonly GraphicsDeviceManager _graphics;
-        private GameDisplay _display;
+        private readonly GameDisplay _display;
         private SpriteBatch _sprite;
 
         public MarqiGame(GameDisplay display)
@@ -44,7 +42,7 @@ namespace Marqi.Tester
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Microsoft.Xna.Framework.Color.Gray);
+            GraphicsDevice.Clear(new Color(30,30,30));
             _sprite.Begin();
             _sprite.Draw(_display.Texture, Vector2.Zero, Microsoft.Xna.Framework.Color.White);
             _sprite.End();

@@ -1,13 +1,12 @@
 ﻿using Marqi.Display;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Marqi.Widgets
 {
     public abstract class WidgetBase : IWidget
     {
         private bool _dirty;
+
+        public Position Position { get; set; }
 
         public abstract void Render(IDisplay display);
 

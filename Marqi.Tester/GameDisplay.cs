@@ -11,7 +11,7 @@ namespace Marqi.Tester
 {
     public class GameDisplay : DisplayBase
     {
-        private const int PIXEL_SIZE = 10;
+        private const int PIXEL_SIZE = 20;
         private readonly List<BDFFontContainer> _fonts = new List<BDFFontContainer>();
         private readonly int _rows;
         private readonly int _cols;
@@ -45,6 +45,11 @@ namespace Marqi.Tester
 
         public override void DrawText(Font font, int x, int y, RGB.Color color, string text, int spacing = 0, bool vertical = false)
         {
+            if (string.IsNullOrEmpty(text))
+            {
+                return;
+            }
+
             var bdf = _fonts[font.Id];
             var offset = 0;
             foreach (var c in text)
@@ -93,7 +98,7 @@ namespace Marqi.Tester
 
         public override void SetPixel(int x, int y, RGB.Color color)
         {
-            if(x >= _cols || y >= _rows)
+            if(x >= _cols || y >= _rows || x < 0 || y < 0)
             {
                 return;
             }

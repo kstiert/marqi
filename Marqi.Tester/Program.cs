@@ -10,16 +10,32 @@ namespace Marqi.Tester
         static void Main()
         {
             var display = new GameDisplay(32, 64);
-            var text = new TextWidget
+            var date = new TextWidget
             {
-                Font = display.LoadFont("fonts/6x13.bdf"),
-                Text = "Hello World"
+                Font = display.LoadFont("fonts/5x8.bdf"),
+                Position = new Position { X = 0, Y = 8 }
+            };
+            var time = new TextWidget
+            {
+                Font = display.LoadFont("fonts/5x8.bdf"),
+                Position = new Position { X = 0, Y = 16 }
+            };
+            var name = new TextWidget
+            {
+                Font = display.LoadFont("fonts/5x8.bdf"),
+                Position = new Position { X = 0, Y = 24 }
             };
             var cal = new GoogleCalendar
             {
-                Update = (t) => text.Text = t
+                Update = (e) => 
+                {
+                    time.Text = e.Start;
+                    name.Text = e.Name;
+                }
             };
-            display.AddWidget(text);
+            display.AddWidget(date);
+            display.AddWidget(time);
+            display.AddWidget(name);
             cal.Refresh();
             using (var game = new MarqiGame(display))
                 game.Run();
