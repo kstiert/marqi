@@ -38,6 +38,7 @@ namespace Marqi.Display
         }
 
         public abstract void Clear();
+        public abstract void DrawLine(int x0, int y0, int x1, int y1, Color color);
         public abstract void DrawText(Font font, int x, int y, Color color, string text, int spacing = 0, bool vertical = false);
         public abstract void Fill(Color color);
         public abstract Font LoadFont(string file);

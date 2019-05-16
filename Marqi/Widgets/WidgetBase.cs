@@ -6,6 +6,11 @@ namespace Marqi.Widgets
     {
         private bool _dirty;
 
+        public WidgetBase()
+        {
+            _dirty = true;
+        }
+
         public Position Position { get; set; }
 
         public abstract void Render(IDisplay display);

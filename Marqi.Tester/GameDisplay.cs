@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Marqi.Display;
+using Marqi.RGB;
 using Marqi.Widgets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -41,6 +42,32 @@ namespace Marqi.Tester
         public override void Clear()
         {
             _buffer = new Texture2D(_graphics, Width, Height);
+        }
+
+        public override void DrawLine(int x0, int y0, int x1, int y1, RGB.Color color)
+        {
+            if (Math.Abs(y1 - y0) < Math.Abs(x1 - x0))
+            {
+                if(x0 > x1)
+                {
+                    DrawLineLow(x1, y1, x0, y0, color);
+                }
+                else
+                {
+                    DrawLineLow(x0, y0, x1, y1, color);
+                }
+            }
+            else
+            {
+                if (y0 > y1)
+                {
+                    DrawLineHigh(x1, y1, x0, y0, color);
+                }
+                else
+                {
+                    DrawLineHigh(x0, y0, x1, y1, color);
+                }
+            }
         }
 
         public override void DrawText(Font font, int x, int y, RGB.Color color, string text, int spacing = 0, bool vertical = false)
@@ -117,6 +144,56 @@ namespace Marqi.Tester
             var t = _screen;
             _screen = _buffer;
             _buffer = t;
+        }
+
+        private void DrawLineLow(int x0, int y0, int x1, int y1, RGB.Color color)
+        {
+            var dx = x1 - x0;
+            var dy = y1 - y0;
+            var yi = 1;
+            if (dy < 0)
+            {
+                yi = -1;
+                dy = -dy;
+            }
+            int D = 2 * dy - dx;
+            int y = y0;
+
+            for(int x = x0; x < x1; x++)
+            {
+                SetPixel(x, y, color);
+                if(D > 0)
+                {
+                    y += yi;
+                    D -= 2 * dx;
+                }
+                D += 2 * dy;
+            }
+        }
+
+        private void DrawLineHigh(int x0, int y0, int x1, int y1, RGB.Color color)
+        {
+            var dx = x1 - x0;
+            var dy = y1 - y0;
+            var xi = 1;
+            if (dx < 0)
+            {
+                xi = -1;
+                dx = -dx;
+            }
+            int D = 2 * dx - dy;
+            int x = x0;
+
+            for (int y = y0; y < y1; y++)
+            {
+                SetPixel(x, y, color);
+                if (D > 0)
+                {
+                    x += xi;
+                    D -= 2 * dy;
+                }
+                D += 2 * dx;
+            }
         }
     }
 }

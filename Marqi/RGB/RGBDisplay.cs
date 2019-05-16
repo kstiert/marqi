@@ -41,6 +41,11 @@ namespace Marqi.RGB
             return new Font(_fonts.Count - 1);
         }
 
+        public override void DrawLine(int x0, int y0, int x1, int y1, Color color)
+        {
+            _canvas.DrawLine(x0, y0, x1, y1, color);
+        }
+
         public override void DrawText(Font font, int x, int y, Color color, string text, int spacing = 0, bool vertical = false)
         {
             _canvas.DrawText(_fonts[font.Id], x, y, color, text, spacing, vertical);
