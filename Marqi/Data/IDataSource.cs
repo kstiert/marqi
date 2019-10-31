@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace Marqi.Data
 {
@@ -6,6 +7,6 @@ namespace Marqi.Data
     {
         Action<T> Update { get; set; }
 
-        void Refresh();
+         Task Refresh();
     }
 }

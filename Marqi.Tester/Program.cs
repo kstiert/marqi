@@ -63,10 +63,11 @@ namespace Marqi.Tester
                 }
             };
             display.AddWidget(new LineWidget { X0 = 0, Y0 = 7, X1 = 64, Y1 = 7, Color = new Color(225, 255, 255) });
+            display.AddWidget(new LineWidget { X0 = 0, Y0 = 23, X1 = 64, Y1 = 23, Color = new Color(225, 255, 255) });
             display.AddWidget(new LineWidget { X0 = 52, Y0 = 0, X1 = 52, Y1 = 7, Color = new Color(225, 255, 255) });
             display.AddWidget(datetime);
             display.AddWidget(name);
-            cal.Refresh();
+            _ = cal.Refresh();
         }
     }
 }

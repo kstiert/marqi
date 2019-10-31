@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using Marqi.Display;
-using Marqi.RGB;
-using Marqi.Widgets;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Orvid.Graphics.FontSupport.bdf;
@@ -19,11 +17,13 @@ namespace Marqi.Tester
         private GraphicsDevice _graphics;
         private Texture2D _screen;
         private Texture2D _buffer;
+        private Color[] _clear;
 
         public GameDisplay(int rows, int cols)
         {         
             _rows = rows;
             _cols = cols;
+            _clear = new Color[Height * Width];
         }
 
         public int Width { get { return _cols * PIXEL_SIZE; } }
@@ -41,7 +41,7 @@ namespace Marqi.Tester
 
         public override void Clear()
         {
-            _buffer = new Texture2D(_graphics, Width, Height);
+            _buffer.SetData(_clear);
         }
 
         public override void DrawLine(int x0, int y0, int x1, int y1, RGB.Color color)

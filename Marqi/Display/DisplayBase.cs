@@ -20,13 +20,13 @@ namespace Marqi.Display
             var render = false;
             foreach (var widget in Widgets)
             {
-                if(widget.Update())
+                if (widget.Update())
                 {
                     render = true;
                 }
             }
 
-            if(render)
+            if (render)
             {
                 foreach (var widget in Widgets)
                 {

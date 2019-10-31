@@ -1,24 +1,25 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Marqi.Data.Configuration
 {
     public class ConfigFile<T> : IDataSource<T>
     {
-        private readonly string _file;
+        private readonly string _path;
 
-        public ConfigFile(string file)
+        public ConfigFile(string path)
         {
-            _file = file;
+            _path = path;
         }
 
         public Action<T> Update { get; set; }
 
-        public void Refresh()
+        public async Task Refresh()
         {
-            File.OpenRead(_file).;
-            JsonConvert.DeserializeObject<T>()
+            var stream = new StreamReader(_path);
+            var data = JsonConvert.DeserializeObject<T>(await stream.ReadToEndAsync());
         }
     }
 }

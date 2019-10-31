@@ -15,6 +15,7 @@ namespace Marqi.Tester
             _graphics = new GraphicsDeviceManager(this);
             _display = display;
             IsMouseVisible = true;
+            IsFixedTimeStep = false;
         }
 
         protected override void LoadContent()

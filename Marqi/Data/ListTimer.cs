@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Marqi.Data
 {
@@ -24,9 +24,9 @@ namespace Marqi.Data
 
         public Action<T> Update { get; set; }
 
-        public void Refresh()
+        public async Task Refresh()
         {
-            _source.Refresh();
+            await _source.Refresh();
         }
 
         private void SourceUpdate(List<T> list)
