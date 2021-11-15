@@ -25,7 +25,10 @@ namespace Marqi.Widgets
 
         public override void Render(IDisplay display)
         {
-            display.DrawText(Font, Position.X, Position.Y, Color, Text);
+            if(!string.IsNullOrEmpty(Text))
+            {
+                display.DrawText(Font, Position.X, Position.Y, Color, Text);
+            }
         }
     }
 }

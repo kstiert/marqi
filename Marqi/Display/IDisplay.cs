@@ -13,5 +13,6 @@ namespace Marqi.Display
         Font LoadFont(string file);
         void SetPixel(int x, int y, Color color);
         void Swap();
+        void Update();
     }
 }
