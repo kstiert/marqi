@@ -4,41 +4,26 @@ using Marqi.Data.Todoist;
 using Marqi.Display;
 using Marqi.RGB;
 using Marqi.Widgets;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Threading;
 
 namespace Marqi
 {
-    class Program
+    public class Program
     {
-        static void Main()
+        public static void Main(string[] args)
         {
-            IDisplay display = new RGBDisplay();
-
-            try
-            {
-                Basic(display);
-            }
-            catch (Exception e)
-            {
-                Console.Write(e.Message);
-                return;
-            }
-
-            while (!Console.KeyAvailable)
-            {
-                try
-                {
-                    display.Update();
-                }
-                catch(Exception e)
-                {
-                    Console.Write(e.Message);
-                    return;
-                }
-                Thread.Sleep(1000);
-            }
+            CreateHostBuilder(args).Build().Run();
         }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
 
         private static void Basic(IDisplay display)
         {

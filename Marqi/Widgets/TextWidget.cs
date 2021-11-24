@@ -1,4 +1,5 @@
 ﻿using Marqi.Display;
+using Marqi.Fonts;
 using Marqi.RGB;
 
 namespace Marqi.Widgets

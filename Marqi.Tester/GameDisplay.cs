@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using Marqi.Display;
+using Marqi.Fonts;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Orvid.Graphics.FontSupport.bdf;
 
 namespace Marqi.Tester
 {
-    public class GameDisplay : DisplayBase
+    public class GameDisplay : IDisplay
     {
         private const int PIXEL_SIZE = 20;
         private readonly List<BDFFontContainer> _fonts = new List<BDFFontContainer>();
@@ -39,12 +40,12 @@ namespace Marqi.Tester
             _buffer = new Texture2D(graphics, Width, Height);
         }
 
-        public override void Clear()
+        public void Clear()
         {
             _buffer.SetData(_clear);
         }
 
-        public override void DrawLine(int x0, int y0, int x1, int y1, RGB.Color color)
+        public void DrawLine(int x0, int y0, int x1, int y1, RGB.Color color)
         {
             if (Math.Abs(y1 - y0) < Math.Abs(x1 - x0))
             {
@@ -70,7 +71,7 @@ namespace Marqi.Tester
             }
         }
 
-        public override void DrawText(Font font, int x, int y, RGB.Color color, string text, int spacing = 0, bool vertical = false)
+        public void DrawText(Font font, int x, int y, RGB.Color color, string text, int spacing = 0, bool vertical = false)
         {
             if (string.IsNullOrEmpty(text))
             {
@@ -105,7 +106,7 @@ namespace Marqi.Tester
             }
         }
 
-        public override void Fill(RGB.Color color)
+        public void Fill(RGB.Color color)
         {
             var data = new Microsoft.Xna.Framework.Color[Width * Height];
             var c = new Microsoft.Xna.Framework.Color(color.R, color.G, color.B);
@@ -116,14 +117,14 @@ namespace Marqi.Tester
             _buffer.SetData(data);
         }
 
-        public override Font LoadFont(string file)
+        public Font LoadFont(string file)
         {
             var f = File.OpenRead(file);
             _fonts.Add(BDFFontContainer.CreateFont(f));
             return new Font(_fonts.Count - 1);
         }
 
-        public override void SetPixel(int x, int y, RGB.Color color)
+        public void SetPixel(int x, int y, RGB.Color color)
         {
             if(x >= _cols || y >= _rows || x < 0 || y < 0)
             {
@@ -139,7 +140,7 @@ namespace Marqi.Tester
             _buffer.SetData(0, new Rectangle(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE), data, 0, PIXEL_SIZE * PIXEL_SIZE);
         }
 
-        public override void Swap()
+        public void Swap()
         {
             var t = _screen;
             _screen = _buffer;

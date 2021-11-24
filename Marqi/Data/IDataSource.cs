@@ -3,10 +3,13 @@ using System.Threading.Tasks;
 
 namespace Marqi.Data
 {
-    public interface IDataSource<T>
+    public interface IDataSource<T> : IDataSource
     {
-        Action<T> Update { get; set; }
+        Action<T> Update { get; set; } 
+    }
 
-         Task Refresh();
+    public interface IDataSource
+    {
+        Task Refresh();
     }
 }
