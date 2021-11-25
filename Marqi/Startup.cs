@@ -16,11 +16,13 @@ namespace Marqi
 
         public void ConfigureServices(IServiceCollection services)
         {
-
+            services.AddControllers();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseFileServer();
+
             app.UseRouting();
             app.UseEndpoints(endpoints =>
             {

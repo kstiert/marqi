@@ -1,12 +1,10 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Marqi.Fonts
 {
-    public class FontManager
+    public class FontManager : IFontManager
     {
         private static int _nextid = 0;
 
@@ -15,7 +13,7 @@ namespace Marqi.Fonts
         private readonly IEnumerable<IFontFactory> _factories;
 
         private readonly IDictionary<string, Font> _fonts = new Dictionary<string, Font>();
-        
+
         public FontManager(ILogger<FontManager> log, IEnumerable<IFontFactory> factories)
         {
             _log = log;
@@ -28,7 +26,7 @@ namespace Marqi.Fonts
         {
             _log.LogDebug("Loading {file}", file);
 
-            if(_fonts.ContainsKey(file))
+            if (_fonts.ContainsKey(file))
             {
                 _log.LogDebug("Font {file} is already loaded", file);
                 return _fonts[file];
@@ -37,7 +35,7 @@ namespace Marqi.Fonts
             var font = new Font(_nextid);
             _nextid++;
 
-            foreach(var factory in _factories)
+            foreach (var factory in _factories)
             {
                 factory.LoadFont(font.Id, file);
             }
