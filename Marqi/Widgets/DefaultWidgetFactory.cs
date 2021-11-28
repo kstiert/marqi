@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Marqi.Data;
+using Marqi.Data.GCalendar;
+using Marqi.Data.Todoist;
 using Marqi.Fonts;
 using Marqi.RGB;
 using Microsoft.Extensions.Logging;
@@ -54,7 +57,7 @@ namespace Marqi.Widgets
                 Position = new Position { X = 59, Y = 7 },
                 Text = "S"
             });
-            /*
+            
             var cal = new ListTimer<GoogleCalendarEvent>(new GoogleCalendar(), 5)
             {
                 Update = (e) =>
@@ -64,21 +67,21 @@ namespace Marqi.Widgets
                 }
             };
             var todo = new ListTimer<Todo>(new TodoProject(), 5)
-            {>
+            {
                 Update = (t) =>
                 {
                     task.Text = t.Name;
                 }
             };
-            */
+            
             widgets.Add(new LineWidget { X0 = 0, Y0 = 7, X1 = 64, Y1 = 7, Color = new Color(225, 255, 255) });
             widgets.Add(new LineWidget { X0 = 0, Y0 = 23, X1 = 64, Y1 = 23, Color = new Color(225, 255, 255) });
             widgets.Add(new LineWidget { X0 = 52, Y0 = 0, X1 = 52, Y1 = 7, Color = new Color(225, 255, 255) });
             widgets.Add(datetime);
             widgets.Add(name);
             widgets.Add(task);
-            // _ = todo.Refresh();
-            // _ = cal.Refresh();
+            _ = todo.Refresh();
+            _ = cal.Refresh();
             return Task.FromResult((IEnumerable<IWidget>)widgets);
 
         }
