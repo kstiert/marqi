@@ -9,29 +9,9 @@ namespace Marqi.WebRGB
     {
         private readonly IWebRGBCanvas _canvas;
 
-        public WebRGBDisplay(IFontFactory<BDFFontContainer> fontFactory, IWebRGBCanvas canvas) : base(fontFactory)
+        public WebRGBDisplay(IFontFactory<BDFFontContainer> fontFactory, IWebRGBCanvas canvas) : base(fontFactory, canvas)
         {
             _canvas = canvas;
-        }
-
-        public override void Clear()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Fill(Color color)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void SetPixel(int x, int y, Color color)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void Swap()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

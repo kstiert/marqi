@@ -1,7 +1,14 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Marqi.Display;
+using Marqi.Fonts;
+using Marqi.Options;
+using Marqi.RGB;
+using Marqi.WebRGB;
+using Marqi.Widgets;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Orvid.Graphics.FontSupport.bdf;
 
 namespace Marqi
 {
@@ -17,6 +24,18 @@ namespace Marqi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.Configure<DisplayOptions>(Configuration.GetSection("Display"));
+
+            services.AddSingleton<IFontManager, FontManager>();
+            services.AddBDFFontSupport();
+            //services.AddRGBFonts();
+       
+            //services.AddRGBDisplay();
+            services.AddWebRGBDisplay();
+
+            services.AddSingleton<IWidgetFactory, DefaultWidgetFactory>();
+            services.AddHostedService<DisplayManager>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

@@ -4,7 +4,7 @@ using Marqi.Fonts;
 
 namespace Orvid.Graphics.FontSupport.bdf
 {
-    public class BDFFOntFactory : IFontFactory<BDFFontContainer>
+    public class BDFFontFactory : IFontFactory<BDFFontContainer>
     {
         private readonly IDictionary<int, BDFFontContainer> _fonts = new Dictionary<int, BDFFontContainer>();
         

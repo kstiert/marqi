@@ -1,7 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using Marqi.Fonts;
+using Marqi.RGB;
 using Orvid.Graphics.FontSupport.bdf;
 
 namespace Marqi.Display
@@ -10,15 +9,33 @@ namespace Marqi.Display
     {
         private readonly IFontFactory<BDFFontContainer> _fontFactory;
 
-        protected GenericDisplayBase(IFontFactory<BDFFontContainer> fontFactory)
+        private readonly IGenericCanvas _canvas;
+
+        protected GenericDisplayBase(IFontFactory<BDFFontContainer> fontFactory, IGenericCanvas canvas)
         {
             _fontFactory = fontFactory;
+            _canvas = canvas;
         }
 
-        public abstract void Clear();
-        public abstract void Swap();
-        public abstract void SetPixel(int x, int y, RGB.Color color);
-        public abstract void Fill(RGB.Color color);
+        public virtual void Clear()
+        {
+            _canvas.Clear();
+        }
+
+        public virtual void Fill(Color color)
+        {
+            _canvas.Fill(color);
+        }
+
+        public virtual void SetPixel(int x, int y, Color color)
+        {
+            _canvas.SetPixel(x, y, color);
+        }
+
+        public virtual void Swap()
+        {
+            _canvas.Swap();
+        }
 
         public void DrawLine(int x0, int y0, int x1, int y1, RGB.Color color)
         {

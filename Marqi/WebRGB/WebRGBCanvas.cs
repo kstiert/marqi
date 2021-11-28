@@ -1,7 +1,12 @@
+using System.IO;
+using System.Threading.Tasks;
 using Marqi.Options;
 using Microsoft.Extensions.Options;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing;
+using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 
 namespace Marqi.WebRGB
 {
@@ -32,7 +37,31 @@ namespace Marqi.WebRGB
 
         public void SetPixel(int x, int y, RGB.Color color)
         {
-            throw new System.NotImplementedException();
+            if(x >= _displayOptions.Columns || y >= _displayOptions.Rows || x < 0 || y < 0)
+            {
+                return;
+            }
+            var halfSize = _displayOptions.PixelSize / 2;
+            var pixel = new EllipsePolygon(new PointF(x * _displayOptions.PixelSize + halfSize, y * _displayOptions.PixelSize + halfSize), new SizeF(halfSize, halfSize));
+            _buffer.Mutate(c => c.Fill(Color.FromRgb(color.R, color.G, color.B), pixel));
+        }
+
+        public async Task<Stream> GetScreenStream()
+        {
+            var stream = new MemoryStream();
+            await _screen.SaveAsPngAsync(stream);
+            stream.Position = 0;
+            return stream;
+        }
+
+        public void Clear()
+        {
+            _buffer.Mutate(i => i.Fill(Color.Black));
+        }
+
+        public void Fill(RGB.Color color)
+        {
+            _buffer.Mutate(i => i.Fill(Color.FromRgb(color.R, color.G, color.B)));
         }
     }
 }
