@@ -40,7 +40,7 @@ namespace Marqi.Display
             {
                 try
                 {
-                    _logger.LogDebug("Updating widgets");
+                    _logger.LogTrace("Updating widgets");
                     var render = false;
                     foreach (var widget in _widgets)
                     {                       
@@ -52,7 +52,7 @@ namespace Marqi.Display
                     
                     if (render)
                     {
-                        _logger.LogDebug("Rendering widgets");
+                        _logger.LogTrace("Rendering widgets");
                         foreach (var widget in _widgets)
                         {
                             foreach(var display in _displays)
@@ -69,7 +69,7 @@ namespace Marqi.Display
                     }
                     else
                     {
-                        _logger.LogDebug("Skipping render");
+                        _logger.LogTrace("Skipping render");
                     }
                 }
                 catch(Exception e)
