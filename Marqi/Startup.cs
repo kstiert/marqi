@@ -1,4 +1,6 @@
-﻿using Marqi.Display;
+﻿using Marqi.Data.GCalendar;
+using Marqi.Data.Todoist;
+using Marqi.Display;
 using Marqi.Fonts;
 using Marqi.Options;
 using Marqi.RGB;
@@ -25,7 +27,12 @@ namespace Marqi
         {
             services.AddControllers();
 
+            services.Configure<GoogleCalendarOptions>(Configuration.GetSection("Gcal"));
+            services.Configure<TodoOptions>(Configuration.GetSection("Todo"));
             services.Configure<DisplayOptions>(Configuration.GetSection("Display"));
+
+            services.AddSingleton<GoogleCalendar>();
+            services.AddSingleton<TodoProject>();
 
             services.AddSingleton<IFontManager, FontManager>();
             services.AddBDFFontSupport();

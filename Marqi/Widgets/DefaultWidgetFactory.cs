@@ -13,12 +13,21 @@ namespace Marqi.Widgets
     {
         private readonly ILogger _logger;
 
+        private readonly ILoggerFactory _loggerFactory;
+
         private readonly IFontManager _fontManager;
 
-        public DefaultWidgetFactory(ILogger<DefaultWidgetFactory> logger, IFontManager fontManager)
+        private readonly GoogleCalendar _googleCalendar;
+
+        private readonly TodoProject _todoProject;
+
+        public DefaultWidgetFactory(ILoggerFactory loggerFactory, IFontManager fontManager, GoogleCalendar googleCalendar, TodoProject todoProject)
         {
-            _logger = logger;
+            _logger = loggerFactory.CreateLogger<DefaultWidgetFactory>();
+            _loggerFactory = loggerFactory;
             _fontManager = fontManager;
+            _googleCalendar = googleCalendar;
+            _todoProject = todoProject;
         }
 
         public Task<IEnumerable<IWidget>> MakeWidgets()
@@ -58,7 +67,7 @@ namespace Marqi.Widgets
                 Text = "S"
             });
             
-            var cal = new ListTimer<GoogleCalendarEvent>(new GoogleCalendar(), 5)
+            var cal = new ListTimer<GoogleCalendarEvent>(_loggerFactory.CreateLogger<ListTimer<GoogleCalendarEvent>>(), _googleCalendar, 5)
             {
                 Update = (e) =>
                 {
@@ -66,7 +75,7 @@ namespace Marqi.Widgets
                     name.Text = e.Name;
                 }
             };
-            var todo = new ListTimer<Todo>(new TodoProject(), 5)
+            var todo = new ListTimer<Todo>(_loggerFactory.CreateLogger<ListTimer<Todo>>(), _todoProject, 5)
             {
                 Update = (t) =>
                 {
