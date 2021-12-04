@@ -36,7 +36,7 @@ namespace Marqi.Tester
                 this.Exit();
             }
 
-            _display.Update();
+            // _display.Update();
 
             base.Update(gameTime);
         }

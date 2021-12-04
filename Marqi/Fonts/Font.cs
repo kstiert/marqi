@@ -1,4 +1,4 @@
-﻿namespace Marqi
+﻿namespace Marqi.Fonts
 {
     public class Font
     {

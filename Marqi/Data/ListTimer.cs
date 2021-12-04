@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Marqi.Data
 {
     public class ListTimer<T> : IDataSource<T>
     {
+        private readonly ILogger _logger;
         private readonly IDataSource<List<T>> _source;
         private readonly int _interval;
         private readonly Timer _timer;
         private List<T> _list;
         private int _next;
 
-        public ListTimer(IDataSource<List<T>> source, int interval)
+        public ListTimer(ILogger<ListTimer<T>> logger, IDataSource<List<T>> source, int interval)
         {
+            _logger = logger;
             _source = source;
             _source.Update = SourceUpdate;
             _interval = interval;

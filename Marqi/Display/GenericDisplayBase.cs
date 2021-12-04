@@ -1,48 +1,40 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using Marqi.Display;
+using System;
 using Marqi.Fonts;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using Marqi.RGB;
 using Orvid.Graphics.FontSupport.bdf;
 
-namespace Marqi.Tester
+namespace Marqi.Display
 {
-    public class GameDisplay : IDisplay
+    public abstract class GenericDisplayBase : IDisplay
     {
-        private const int PIXEL_SIZE = 20;
-        private readonly List<BDFFontContainer> _fonts = new List<BDFFontContainer>();
-        private readonly int _rows;
-        private readonly int _cols;
-        private GraphicsDevice _graphics;
-        private Texture2D _screen;
-        private Texture2D _buffer;
-        private Color[] _clear;
+        private readonly IFontFactory<BDFFontContainer> _fontFactory;
 
-        public GameDisplay(int rows, int cols)
-        {         
-            _rows = rows;
-            _cols = cols;
-            _clear = new Color[Height * Width];
+        private readonly IGenericCanvas _canvas;
+
+        protected GenericDisplayBase(IFontFactory<BDFFontContainer> fontFactory, IGenericCanvas canvas)
+        {
+            _fontFactory = fontFactory;
+            _canvas = canvas;
         }
 
-        public int Width { get { return _cols * PIXEL_SIZE; } }
-
-        public int Height { get { return _rows * PIXEL_SIZE; } }
-
-        public Texture2D Texture { get { return _screen; } }
-
-        public void Load(GraphicsDevice graphics)
+        public virtual void Clear()
         {
-            _graphics = graphics;
-            _screen = new Texture2D(graphics, Width, Height);
-            _buffer = new Texture2D(graphics, Width, Height);
+            _canvas.Clear();
         }
 
-        public void Clear()
+        public virtual void Fill(Color color)
         {
-            _buffer.SetData(_clear);
+            _canvas.Fill(color);
+        }
+
+        public virtual void SetPixel(int x, int y, Color color)
+        {
+            _canvas.SetPixel(x, y, color);
+        }
+
+        public virtual void Swap()
+        {
+            _canvas.Swap();
         }
 
         public void DrawLine(int x0, int y0, int x1, int y1, RGB.Color color)
@@ -78,7 +70,7 @@ namespace Marqi.Tester
                 return;
             }
 
-            var bdf = _fonts[font.Id];
+            var bdf = _fontFactory.GetFont(font.Id);
             var offset = 0;
             foreach (var c in text)
             {
@@ -104,47 +96,6 @@ namespace Marqi.Tester
                 }
                 offset += glyph.getDWidth().width;
             }
-        }
-
-        public void Fill(RGB.Color color)
-        {
-            var data = new Microsoft.Xna.Framework.Color[Width * Height];
-            var c = new Microsoft.Xna.Framework.Color(color.R, color.G, color.B);
-            for(int i = 0; i < data.Length; i++)
-            {
-                data[i] = c;
-            }
-            _buffer.SetData(data);
-        }
-
-        public Font LoadFont(string file)
-        {
-            var f = File.OpenRead(file);
-            _fonts.Add(BDFFontContainer.CreateFont(f));
-            return new Font(_fonts.Count - 1);
-        }
-
-        public void SetPixel(int x, int y, RGB.Color color)
-        {
-            if(x >= _cols || y >= _rows || x < 0 || y < 0)
-            {
-                return;
-            }
-
-            var data = new Microsoft.Xna.Framework.Color[PIXEL_SIZE * PIXEL_SIZE];
-            var c = new Microsoft.Xna.Framework.Color(color.R, color.G, color.B);
-            for (int i = 0; i < data.Length; i++)
-            {
-                data[i] = c;
-            }
-            _buffer.SetData(0, new Rectangle(x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE), data, 0, PIXEL_SIZE * PIXEL_SIZE);
-        }
-
-        public void Swap()
-        {
-            var t = _screen;
-            _screen = _buffer;
-            _buffer = t;
         }
 
         private void DrawLineLow(int x0, int y0, int x1, int y1, RGB.Color color)
