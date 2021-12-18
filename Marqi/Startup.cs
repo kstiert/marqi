@@ -4,6 +4,7 @@ using Marqi.Display;
 using Marqi.Fonts;
 using Marqi.Options;
 using Marqi.RGB;
+using Marqi.V1.Hubs;
 using Marqi.WebRGB;
 using Marqi.Widgets;
 using Microsoft.AspNetCore.Builder;
@@ -26,6 +27,7 @@ namespace Marqi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSignalR();
 
             services.Configure<GoogleCalendarOptions>(Configuration.GetSection("Gcal"));
             services.Configure<TodoOptions>(Configuration.GetSection("Todo"));
@@ -53,6 +55,7 @@ namespace Marqi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<BufferHub>("/v1/bufferhub");
             });
         }
     }

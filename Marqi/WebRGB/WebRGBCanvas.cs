@@ -1,6 +1,8 @@
 using System.IO;
 using System.Threading.Tasks;
 using Marqi.Options;
+using Marqi.V1.Hubs;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
@@ -17,9 +19,12 @@ namespace Marqi.WebRGB
 
         private readonly DisplayOptions _displayOptions;
 
-        public WebRGBCanvas(IOptions<DisplayOptions> options)
+        private readonly IHubContext<BufferHub> _hubContext;
+
+        public WebRGBCanvas(IOptions<DisplayOptions> options, IHubContext<BufferHub> hubContext)
         {
             _displayOptions = options.Value;
+            _hubContext = hubContext;
             _screen = new Image<Rgba32>(Width, Height, Color.Black);
             _buffer = new Image<Rgba32>(Width, Height, Color.Black);
         }
@@ -33,6 +38,7 @@ namespace Marqi.WebRGB
             var t = _buffer;
             _buffer = _screen;
             _screen = t;
+            _ = _hubContext.Clients.All.SendAsync("BufferChanged");
         }
 
         public void SetPixel(int x, int y, RGB.Color color)
