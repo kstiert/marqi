@@ -41,6 +41,7 @@ namespace Marqi.Data
             }
             else
             {
+                Update(default(T));
                 _timer.Change(-1, 0);
             }
         }
