@@ -52,19 +52,11 @@ namespace Marqi.Widgets
                 Font = font,
                 Position = new Position { X = 0, Y = 31 }
             };
-            widgets.Add(new TextWidget
+            widgets.Add(new ClockWidget
             {
                 Color = new Color(255, 140, 0),
                 Font = font,
-                Position = new Position { X = 54, Y = 7 },
-                Text = "D"
-            });
-            widgets.Add(new TextWidget
-            {
-                Color = new Color(0, 122, 255),
-                Font = font,
-                Position = new Position { X = 59, Y = 7 },
-                Text = "S"
+                Position = new Position { X = 35, Y = 7 },
             });
             
             var cal = new ListTimer<GoogleCalendarEvent>(_loggerFactory.CreateLogger<ListTimer<GoogleCalendarEvent>>(), _googleCalendar, 5)
@@ -85,7 +77,7 @@ namespace Marqi.Widgets
             
             widgets.Add(new LineWidget { X0 = 0, Y0 = 7, X1 = 64, Y1 = 7, Color = new Color(225, 255, 255) });
             widgets.Add(new LineWidget { X0 = 0, Y0 = 23, X1 = 64, Y1 = 23, Color = new Color(225, 255, 255) });
-            widgets.Add(new LineWidget { X0 = 52, Y0 = 0, X1 = 52, Y1 = 7, Color = new Color(225, 255, 255) });
+            widgets.Add(new LineWidget { X0 = 35, Y0 = 0, X1 = 35, Y1 = 7, Color = new Color(225, 255, 255) });
             widgets.Add(datetime);
             widgets.Add(name);
             widgets.Add(task);
