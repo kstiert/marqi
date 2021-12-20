@@ -38,10 +38,13 @@ namespace Marqi
 
             services.AddSingleton<IFontManager, FontManager>();
             services.AddBDFFontSupport();
-            //services.AddRGBFonts();
-       
-            //services.AddRGBDisplay();
             services.AddWebRGBDisplay();
+
+            if(!string.IsNullOrEmpty(Configuration["EnableRGB"]))
+            {
+                services.AddRGBFonts();   
+                services.AddRGBDisplay();
+            }
 
             services.AddSingleton<IWidgetFactory, DefaultWidgetFactory>();
             services.AddHostedService<DisplayManager>();

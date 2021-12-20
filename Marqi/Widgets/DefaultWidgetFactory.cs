@@ -77,7 +77,7 @@ namespace Marqi.Widgets
             
             widgets.Add(new LineWidget { X0 = 0, Y0 = 7, X1 = 64, Y1 = 7, Color = new Color(225, 255, 255) });
             widgets.Add(new LineWidget { X0 = 0, Y0 = 23, X1 = 64, Y1 = 23, Color = new Color(225, 255, 255) });
-            widgets.Add(new LineWidget { X0 = 35, Y0 = 0, X1 = 35, Y1 = 7, Color = new Color(225, 255, 255) });
+            widgets.Add(new LineWidget { X0 = 33, Y0 = 0, X1 = 33, Y1 = 7, Color = new Color(225, 255, 255) });
             widgets.Add(datetime);
             widgets.Add(name);
             widgets.Add(task);
