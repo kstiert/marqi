@@ -40,12 +40,13 @@ namespace Marqi.Widgets
             var widgets = new List<IWidget>();            
             var font = _fontManager.LoadFont("fonts/5x8.bdf");
             var fontSmall = _fontManager.LoadFont("fonts/4x6.bdf");
-            var fontBig = _fontManager.LoadFont("fonts/6x10.bdf");
+            var fontBig = _fontManager.LoadFont("fonts/6x13.bdf");
+            var fontBigBold = _fontManager.LoadFont("fonts/6x13B.bdf");
             var datetime = new TextWidget
             {
                 Color = new Color(255, 0, 0),
                 Font = fontSmall,
-                Position = new Position { X = 0, Y = 15 }
+                Position = new Position { X = 0, Y = 16 }
             };
             var name = new TextWidget
             {
@@ -62,21 +63,22 @@ namespace Marqi.Widgets
             var timer = new TextWidget
             {
                 Color = new Color(0, 122, 255),
-                Font = fontBig,
-                Position = new Position { X = 0, Y = 9 }
+                Font = fontSmall,
+                Position = new Position { X = 0, Y = 6 }
             };
             var progress = new ProgressBarWidget
             {
                 Color = new Color(0, 200, 0),
-                Position = new Position { X = 0, Y = 0},
-                Width = 33,
-                Height = 9
+                CompleteColor = new Color(255, 0, 0),
+                Position = new Position { X = 0, Y = 7},
+                Width = 32,
+                Height = 3
             };
             widgets.Add(new ClockWidget
             {
-                Color = new Color(255, 140, 0),
-                Font = fontBig,
-                Position = new Position { X = 35, Y = 7 },
+                Color = new Color(255, 0, 0),
+                Font = fontBigBold,
+                Position = new Position { X = 33, Y = 10 },
             });
             var cal = new ListTimer<GoogleCalendarEvent>(_loggerFactory.CreateLogger<ListTimer<GoogleCalendarEvent>>(), _googleCalendar, 5)
             {
@@ -104,7 +106,8 @@ namespace Marqi.Widgets
             
             widgets.Add(new LineWidget { X0 = 0, Y0 = 10, X1 = 64, Y1 = 10, Color = new Color(225, 255, 255) });
             widgets.Add(new LineWidget { X0 = 0, Y0 = 23, X1 = 64, Y1 = 23, Color = new Color(225, 255, 255) });
-            widgets.Add(new LineWidget { X0 = 33, Y0 = 0, X1 = 33, Y1 = 7, Color = new Color(225, 255, 255) });
+            // vertical
+            widgets.Add(new LineWidget { X0 = 32, Y0 = 0, X1 = 32, Y1 = 10, Color = new Color(225, 255, 255) });
             widgets.Add(datetime);
             widgets.Add(name);
             widgets.Add(task);

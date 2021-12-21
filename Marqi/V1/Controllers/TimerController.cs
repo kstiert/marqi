@@ -35,6 +35,7 @@ namespace Marqi.V1.Controllers
         public ActionResult Cancel([FromQuery]string name)
         {
             _timers.CancelTimer(name);
+            _timers.Refresh();
             return Ok();
         }
     }

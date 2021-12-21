@@ -11,7 +11,7 @@ namespace Marqi.Data.Timers
 
         public void CreateTimer(string name, TimeSpan time)
         {
-            _timers["name"] = new MarqiTimer
+            _timers[name] = new MarqiTimer
             {
                 Name = name,
                 Start = DateTime.Now,
