@@ -15,9 +15,12 @@ namespace Marqi.RGB
             return _fonts[id];
         }
 
-        public void LoadFont(int id, string file)
+        public Task LoadFont(int id, string file)
         {
-            _fonts[id] = new RGBLedFont(file);
+            return Task.Run(() => 
+            {
+                _fonts[id] = new RGBLedFont(file);
+            });        
         }
     }
 }

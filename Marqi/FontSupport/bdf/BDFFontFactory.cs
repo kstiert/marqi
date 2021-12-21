@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Marqi.Fonts;
 
 namespace Orvid.Graphics.FontSupport.bdf
@@ -13,10 +14,14 @@ namespace Orvid.Graphics.FontSupport.bdf
             return _fonts[id];
         }
 
-        public void LoadFont(int id, string file)
+        public Task LoadFont(int id, string file)
         {
-            var f = File.OpenRead(file);
-            _fonts[id] = BDFFontContainer.CreateFont(f);
+            return Task.Run(() => 
+            {
+                var f = File.OpenRead(file);
+                _fonts[id] = BDFFontContainer.CreateFont(f);
+            });
+
         }
     }
 }

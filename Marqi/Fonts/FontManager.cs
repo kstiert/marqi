@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Marqi.Fonts
 {
@@ -22,7 +24,7 @@ namespace Marqi.Fonts
 
         public IEnumerable<Font> Fonts => _fonts.Values.AsEnumerable();
 
-        public Font LoadFont(string file)
+        public async Task<Font> LoadFont(string file)
         {
             _log.LogDebug("Loading {file}", file);
 
@@ -31,14 +33,10 @@ namespace Marqi.Fonts
                 _log.LogDebug("Font {file} is already loaded", file);
                 return _fonts[file];
             }
+            
+            var font = new Font(Interlocked.Increment(ref _nextid));
 
-            var font = new Font(_nextid);
-            _nextid++;
-
-            foreach (var factory in _factories)
-            {
-                factory.LoadFont(font.Id, file);
-            }
+            await Task.WhenAll(_factories.Select(f => f.LoadFont(font.Id, file)));
 
             _fonts[file] = font;
             _log.LogDebug("Loaded {file}", file);

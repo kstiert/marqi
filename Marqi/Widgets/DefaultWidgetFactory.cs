@@ -35,13 +35,18 @@ namespace Marqi.Widgets
             _timerCollection = timerCollection;
         }
 
-        public Task<IEnumerable<IWidget>> MakeWidgets()
+        public async Task<IEnumerable<IWidget>> MakeWidgets()
         {
             var widgets = new List<IWidget>();            
-            var font = _fontManager.LoadFont("fonts/5x8.bdf");
-            var fontSmall = _fontManager.LoadFont("fonts/4x6.bdf");
-            var fontBig = _fontManager.LoadFont("fonts/6x13.bdf");
-            var fontBigBold = _fontManager.LoadFont("fonts/6x13B.bdf");
+            var fontTask =  _fontManager.LoadFont("fonts/5x8.bdf");
+            var fontSmallTask = _fontManager.LoadFont("fonts/4x6.bdf");
+            var fontBigTask = _fontManager.LoadFont("fonts/6x13.bdf");
+            var fontBigBoldTask = _fontManager.LoadFont("fonts/6x13B.bdf");
+            var font =  await fontTask;
+            var fontSmall = await fontSmallTask;
+            var fontBig = await fontBigTask;
+            var fontBigBold = await fontBigBoldTask;
+            
             var datetime = new TextWidget
             {
                 Color = new Color(255, 0, 0),
@@ -115,7 +120,7 @@ namespace Marqi.Widgets
             widgets.Add(timer);
             _ = todo.Refresh();
             _ = cal.Refresh();
-            return Task.FromResult((IEnumerable<IWidget>)widgets);
+            return widgets;
 
         }
     }

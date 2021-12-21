@@ -12,6 +12,6 @@ namespace Marqi.Fonts
 
     public interface IFontFactory
     {
-        void LoadFont(int id, string file);
+        Task LoadFont(int id, string file);
     }
 }
