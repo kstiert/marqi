@@ -1,4 +1,5 @@
 ﻿using Marqi.Data.GCalendar;
+using Marqi.Data.Timers;
 using Marqi.Data.Todoist;
 using Marqi.Display;
 using Marqi.Fonts;
@@ -35,6 +36,7 @@ namespace Marqi
 
             services.AddSingleton<GoogleCalendar>();
             services.AddSingleton<TodoProject>();
+            services.AddSingleton<TimerCollection>();
 
             services.AddSingleton<IFontManager, FontManager>();
             services.AddBDFFontSupport();

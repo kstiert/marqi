@@ -10,6 +10,8 @@ namespace Marqi.Widgets
 
         public Font Font { get; set; }
 
+        public int? Truncate { get; set; }
+
         private string _text;
         public string Text
         {
@@ -19,7 +21,15 @@ namespace Marqi.Widgets
             }
             set
             {
-                _text = value;
+                if(Truncate.HasValue)
+                {
+                    _text = value.Substring(0, Truncate.Value);
+                }
+                else
+                {
+                    _text = value;
+                }
+                               
                 Dirty();
             }
         }
