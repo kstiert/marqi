@@ -1,4 +1,5 @@
-﻿using Marqi.Data.GCalendar;
+﻿using Marqi.Data;
+using Marqi.Data.GCalendar;
 using Marqi.Data.Timers;
 using Marqi.Data.Todoist;
 using Marqi.Display;
@@ -50,6 +51,7 @@ namespace Marqi
 
             services.AddSingleton<IWidgetFactory, DefaultWidgetFactory>();
             services.AddHostedService<DisplayManager>();
+            services.AddHostedService<DataSourceRefreser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

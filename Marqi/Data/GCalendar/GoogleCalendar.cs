@@ -23,6 +23,8 @@ namespace Marqi.Data.GCalendar
             _options = options.Value;
         }
 
+        public string Cron => "*/20 * * * *";
+
         public Action<List<GoogleCalendarEvent>> Update { get; set; }
 
         public async Task Refresh()

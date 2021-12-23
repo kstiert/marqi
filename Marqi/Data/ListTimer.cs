@@ -25,6 +25,8 @@ namespace Marqi.Data
             _next = 0;
         }
 
+        public string Cron => string.Empty;
+
         public Action<T> Update { get; set; }
 
         public async Task Refresh()

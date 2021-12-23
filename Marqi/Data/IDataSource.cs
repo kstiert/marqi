@@ -10,6 +10,8 @@ namespace Marqi.Data
 
     public interface IDataSource
     {
+        string Cron { get; }
+
         Task Refresh();
     }
 }

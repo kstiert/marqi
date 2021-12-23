@@ -20,12 +20,14 @@ namespace Marqi.Data.Timers
             };
         }
 
+        public string Cron => string.Empty;
+
+        public Action<List<MarqiTimer>> Update { get; set; }
+
         public void CancelTimer(string name)
         {
             _timers.Remove(name);
-        }
-
-        public Action<List<MarqiTimer>> Update { get; set; }
+        } 
 
         public Task Refresh()
         {
