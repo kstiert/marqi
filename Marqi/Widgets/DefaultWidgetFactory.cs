@@ -120,6 +120,7 @@ namespace Marqi.Widgets
             widgets.Add(timer);
             _ = todo.Refresh();
             _ = cal.Refresh();
+            _ = timers.Refresh();
             return widgets;
 
         }

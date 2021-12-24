@@ -1,4 +1,5 @@
-﻿using Marqi.Data;
+﻿using EasyCaching.SQLite;
+using Marqi.Data;
 using Marqi.Data.GCalendar;
 using Marqi.Data.Timers;
 using Marqi.Data.Todoist;
@@ -30,6 +31,12 @@ namespace Marqi
         {
             services.AddControllers();
             services.AddSignalR();
+
+            services.AddEasyCaching(c => {
+                c.UseSQLite(sql =>{
+                    sql.DBConfig = new SQLiteDBOptions { FileName = "marqi.db" };
+                });
+            });
 
             services.Configure<GoogleCalendarOptions>(Configuration.GetSection("Gcal"));
             services.Configure<TodoOptions>(Configuration.GetSection("Todo"));
