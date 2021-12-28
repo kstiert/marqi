@@ -15,11 +15,14 @@ namespace Marqi.Data.GCalendar
     {
         private readonly ILogger _logger;
 
+        private readonly IHttpClientFactory _httpFactory;
+
         private readonly GoogleCalendarOptions _options;
 
-        public GoogleCalendar(ILogger<GoogleCalendar> logger, IOptions<GoogleCalendarOptions> options)
+        public GoogleCalendar(ILogger<GoogleCalendar> logger, IHttpClientFactory httpFactory, IOptions<GoogleCalendarOptions> options)
         {
             _logger = logger;
+            _httpFactory = httpFactory;
             _options = options.Value;
         }
 
@@ -33,7 +36,7 @@ namespace Marqi.Data.GCalendar
 
             try
             {
-                var calResp = await new HttpClient().GetAsync(_options.Url);
+                var calResp = await _httpFactory.CreateClient().GetAsync(_options.Url);
                 var cal = Calendar.Load(await calResp.Content.ReadAsStreamAsync());
                 var events = cal.GetOccurrences(DateTime.Today, DateTime.Today.AddDays(14))
                                 .OrderBy(o => o.Period.StartTime)

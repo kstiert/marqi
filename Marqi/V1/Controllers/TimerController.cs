@@ -22,7 +22,7 @@ namespace Marqi.V1.Controllers
             if(TimeSpan.TryParse(time, out timeSpan))
             {
                 _timers.CreateTimer(name, timeSpan);
-                _timers.Refresh();
+                _ = _timers.Refresh();
                 return Ok();
             }
             else
@@ -35,7 +35,7 @@ namespace Marqi.V1.Controllers
         public ActionResult Cancel([FromQuery]string name)
         {
             _timers.CancelTimer(name);
-            _timers.Refresh();
+            _ = _timers.Refresh();
             return Ok();
         }
     }

@@ -3,6 +3,7 @@ using Marqi.Data;
 using Marqi.Data.GCalendar;
 using Marqi.Data.Timers;
 using Marqi.Data.Todoist;
+using Marqi.Data.Weather.OpenWeather;
 using Marqi.Display;
 using Marqi.Fonts;
 using Marqi.Options;
@@ -31,6 +32,7 @@ namespace Marqi
         {
             services.AddControllers();
             services.AddSignalR();
+            services.AddHttpClient();
 
             services.AddEasyCaching(c => {
                 c.UseSQLite(sql =>{
@@ -41,10 +43,12 @@ namespace Marqi
             services.Configure<GoogleCalendarOptions>(Configuration.GetSection("Gcal"));
             services.Configure<TodoOptions>(Configuration.GetSection("Todo"));
             services.Configure<DisplayOptions>(Configuration.GetSection("Display"));
+            services.Configure<OpenWeatherOptions>(Configuration.GetSection("OpenWeather"));
 
             services.AddSingleton<GoogleCalendar>();
             services.AddSingleton<TodoProject>();
             services.AddSingleton<TimerCollection>();
+            services.AddSingleton<OpenWeather>();
 
             services.AddSingleton<IFontManager, FontManager>();
             services.AddBDFFontSupport();

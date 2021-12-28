@@ -13,7 +13,7 @@ namespace Marqi.Widgets
 
         public override void Render(IDisplay display)
         {
-            display.DrawText(Font, Position.X, Position.Y, Color, DateTime.Now.ToString("h:mm"));
+            display.DrawText(Font, Position.X, Position.Y, Color, DateTime.Now.ToString("h:mm").PadLeft(5));
         }
     }
 }
