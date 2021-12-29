@@ -1,3 +1,6 @@
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+
 namespace Marqi.Data.Weather
 {
     public class WeatherReport
@@ -7,5 +10,7 @@ namespace Marqi.Data.Weather
         public string Temperature { get; set; }
 
         public string Humidity { get; set; }
+
+        public Image<Rgba32> Icon { get; set; }
     }
 }

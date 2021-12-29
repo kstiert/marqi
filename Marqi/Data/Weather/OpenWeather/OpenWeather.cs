@@ -5,6 +5,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Marqi.Data.Weather.OpenWeather.Model;
 using Microsoft.Extensions.Options;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Marqi.Data.Weather.OpenWeather
 {
@@ -34,9 +36,11 @@ namespace Marqi.Data.Weather.OpenWeather
             {
                 var content = await resp.Content.ReadAsStringAsync();
                 var weather = JsonSerializer.Deserialize<OpenWeatherResponse>(content);
+
                 Update(new List<WeatherReport> { new WeatherReport {
                     Temperature = weather.main.temp.ToString("F0"),
-                    Location = weather.name
+                    Location = weather.name,
+                    Icon = Image.Load<Rgba32>($"icons/weather/{weather.weather[0].icon}.png")
                 }});
             }
         }

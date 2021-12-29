@@ -2,6 +2,7 @@ using System;
 using Marqi.Fonts;
 using Marqi.RGB;
 using Orvid.Graphics.FontSupport.bdf;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Marqi.Display
 {

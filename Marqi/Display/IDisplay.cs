@@ -1,6 +1,6 @@
 ﻿using Marqi.Fonts;
 using Marqi.RGB;
-using Marqi.Widgets;
+using SixLabors.ImageSharp.PixelFormats;
 
 namespace Marqi.Display
 {

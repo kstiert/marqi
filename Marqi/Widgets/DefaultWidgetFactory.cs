@@ -62,7 +62,11 @@ namespace Marqi.Widgets
             {
                 Color = new Color(255, 0, 0),
                 Font = fontSmall,
-                Position = new Position { X = 49, Y = 16 }
+                Position = new Position { X = 53, Y = 16 }
+            };
+            var tempIcon = new IconWidget
+            {
+                Position = new Position { X = 47, Y = 11 }
             };
             var name = new TextWidget
             {
@@ -123,17 +127,19 @@ namespace Marqi.Widgets
             {
                 Update = (w) =>
                 {
-                    temp.Text = $"{w.Temperature.PadLeft(3)}°";
+                    temp.Text = $"{w.Temperature.PadLeft(2)}°";
+                    tempIcon.Icon = w.Icon;
                 }
             };
             widgets.Add(new LineWidget { X0 = 0, Y0 = 10, X1 = 64, Y1 = 10, Color = new Color(225, 255, 255) });
             widgets.Add(new LineWidget { X0 = 0, Y0 = 23, X1 = 64, Y1 = 23, Color = new Color(225, 255, 255) });
-            widgets.Add(new LineWidget { X0 = 48, Y0 = 16, X1 = 64, Y1 = 16, Color = new Color(225, 255, 255) });
+            widgets.Add(new LineWidget { X0 = 46, Y0 = 16, X1 = 64, Y1 = 16, Color = new Color(225, 255, 255) });
             // vertical
             widgets.Add(new LineWidget { X0 = 32, Y0 = 0, X1 = 32, Y1 = 10, Color = new Color(225, 255, 255) });
-            widgets.Add(new LineWidget { X0 = 48, Y0 = 10, X1 = 48, Y1 = 16, Color = new Color(225, 255, 255) });
+            widgets.Add(new LineWidget { X0 = 46, Y0 = 10, X1 = 46, Y1 = 16, Color = new Color(225, 255, 255) });
             widgets.Add(datetime);
             widgets.Add(temp);
+            widgets.Add(tempIcon);
             widgets.Add(name);
             widgets.Add(task);
             widgets.Add(progress);
