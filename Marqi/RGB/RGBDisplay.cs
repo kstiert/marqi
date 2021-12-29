@@ -21,7 +21,8 @@ namespace Marqi.RGB
             {
                 Rows = 32,
                 Cols = 64,
-                HardwareMapping = "adafruit-hat"
+                HardwareMapping = "adafruit-hat",
+                Brightness = 50
             });
             _canvas = _matrix.CreateOffscreenCanvas();
         }
