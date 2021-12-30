@@ -38,6 +38,11 @@ namespace Marqi.Data.Timers
 
         public Action<List<MarqiTimer>> Update { get; set; }
 
+        public async Task<List<MarqiTimer>> ListTimers()
+        {
+            return (await _cache.GetByPrefixAsync<MarqiTimer>(TIMER_PREFIX)).Values.Select(c => c.Value).ToList();
+        }
+
         public void CancelTimer(string name)
         {
             _cache.Remove(MakeCacheKey(name));
@@ -45,7 +50,7 @@ namespace Marqi.Data.Timers
 
         public async Task Refresh()
         {
-            Update((await _cache.GetByPrefixAsync<MarqiTimer>(TIMER_PREFIX)).Values.Select(c => c.Value).ToList());
+            Update(await ListTimers());
         }
 
         private string MakeCacheKey(string name)

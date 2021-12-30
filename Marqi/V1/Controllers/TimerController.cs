@@ -1,6 +1,8 @@
 using Marqi.Data.Timers;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Marqi.V1.Controllers
 {
@@ -13,6 +15,12 @@ namespace Marqi.V1.Controllers
         public TimerController(TimerCollection timers)
         {
             _timers = timers;
+        }
+
+        [HttpGet()]
+        public async Task<List<MarqiTimer>> List()
+        {
+            return await _timers.ListTimers();
         }
 
         [HttpGet("create")]
