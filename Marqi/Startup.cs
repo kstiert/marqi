@@ -1,8 +1,10 @@
 ﻿using EasyCaching.SQLite;
 using Marqi.Data;
 using Marqi.Data.GCalendar;
+using Marqi.Data.Light;
 using Marqi.Data.Timers;
 using Marqi.Data.Todoist;
+using Marqi.Data.Weather.LocalWeather;
 using Marqi.Data.Weather.OpenWeather;
 using Marqi.Display;
 using Marqi.Fonts;
@@ -58,6 +60,12 @@ namespace Marqi
             {
                 services.AddRGBFonts();   
                 services.AddRGBDisplay();
+            }
+
+            if(!string.IsNullOrEmpty(Configuration["EnableI2cSensors"]))
+            {
+                services.AddSingleton<LocalWeather>();
+                services.AddSingleton<LightSensor>();
             }
 
             services.AddSingleton<IWidgetFactory, DefaultWidgetFactory>();
