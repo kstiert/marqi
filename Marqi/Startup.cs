@@ -30,7 +30,12 @@ namespace Marqi
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.Converters.Add(new DateTimeConverter());
+                });
+
             services.AddSignalR();
             services.AddHttpClient();
 
