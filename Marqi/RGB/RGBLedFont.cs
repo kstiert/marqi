@@ -5,11 +5,8 @@ namespace Marqi.RGB
 {
     public class RGBLedFont : IDisposable
     {
-#pragma warning disable IDE1006 // Naming Styles
         [DllImport("librgbmatrix.so", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-
         internal static extern IntPtr load_font(string bdf_font_file);
-
 
         [DllImport("librgbmatrix.so", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         internal static extern int draw_text(IntPtr canvas, IntPtr font, int x, int y, byte r, byte g, byte b, string utf8_text, int extra_spacing);
@@ -55,6 +52,5 @@ namespace Marqi.RGB
             GC.SuppressFinalize(this);
         }
         #endregion
-#pragma warning restore IDE1006 // Naming Styles
     }
 }

@@ -6,12 +6,10 @@ namespace Marqi.RGB
     public class RGBLedCanvas
     {
         #region DLLImports
-#pragma warning disable IDE1006 // Naming Styles
         [DllImport("librgbmatrix.so")]
         internal static extern void led_canvas_get_size(IntPtr canvas, out int width, out int height);
 
         [DllImport("librgbmatrix.so")]
-
         internal static extern void led_canvas_set_pixel(IntPtr canvas, int x, int y, byte r, byte g, byte b);
 
         [DllImport("librgbmatrix.so")]
@@ -25,7 +23,6 @@ namespace Marqi.RGB
 
         [DllImport("librgbmatrix.so")]
         internal static extern void draw_line(IntPtr canvas, int x0, int y0, int x1, int y1, byte r, byte g, byte b);
-#pragma warning restore IDE1006 // Naming Styles
         #endregion
 
         // This is a wrapper for canvas no need to implement IDisposable here 
@@ -37,7 +34,9 @@ namespace Marqi.RGB
         internal RGBLedCanvas(IntPtr canvas)
         {
             _canvas = canvas;
-            led_canvas_get_size(_canvas, out int width, out int height);
+            int width;
+            int height;
+            led_canvas_get_size(_canvas, out width, out height);
             Width = width;
             Height = height;
         }
