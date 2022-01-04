@@ -11,7 +11,6 @@ namespace Marqi.Data.Timers
         private const string TIMER_PREFIX = "TIMER_";
 
         private readonly IEasyCachingProvider _cache;
-        private bool disposedValue;
 
         public TimerCollection(IEasyCachingProvider cache)
         {
