@@ -1,4 +1,4 @@
-using Marqi.Display;
+using Marqi.Common.Display;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Marqi.WebRGB

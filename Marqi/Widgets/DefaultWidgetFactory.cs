@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Marqi.Data;
@@ -8,7 +7,7 @@ using Marqi.Data.Todoist;
 using Marqi.Data.Weather;
 using Marqi.Data.Weather.OpenWeather;
 using Marqi.Fonts;
-using Marqi.RGB;
+using Marqi.Common;
 using Microsoft.Extensions.Logging;
 
 namespace Marqi.Widgets
@@ -40,17 +39,13 @@ namespace Marqi.Widgets
             _openWeather = openWeather; 
         }
 
-        public async Task<IEnumerable<IWidget>> MakeWidgets()
+        public Task<IEnumerable<IWidget>> MakeWidgets()
         {
             var widgets = new List<IWidget>();            
-            var fontTask =  _fontManager.LoadFont("fonts/5x8.bdf");
-            var fontSmallTask = _fontManager.LoadFont("fonts/4x6.bdf");
-            var fontBigTask = _fontManager.LoadFont("fonts/6x13.bdf");
-            var fontBigBoldTask = _fontManager.LoadFont("fonts/6x13B.bdf");
-            var font =  await fontTask;
-            var fontSmall = await fontSmallTask;
-            var fontBig = await fontBigTask;
-            var fontBigBold = await fontBigBoldTask;
+            var font = _fontManager.LoadFont("fonts/5x8.bdf");
+            var fontSmall = _fontManager.LoadFont("fonts/4x6.bdf");
+            var fontBig = _fontManager.LoadFont("fonts/6x13.bdf");
+            var fontBigBold = _fontManager.LoadFont("fonts/6x13B.bdf");
             
             var datetime = new TextWidget
             {
@@ -148,7 +143,7 @@ namespace Marqi.Widgets
             _ = cal.Refresh();
             _ = timers.Refresh();
             _ = temps.Refresh();
-            return widgets;
+            return Task.FromResult((IEnumerable<IWidget>)widgets);
 
         }
     }

@@ -1,4 +1,4 @@
-﻿using Marqi.Display;
+﻿using Marqi.Common.Display;
 
 namespace Marqi.Widgets
 {

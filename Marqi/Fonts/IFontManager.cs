@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using Marqi.Common.Fonts;
 
 namespace Marqi.Fonts
 {
@@ -7,6 +7,6 @@ namespace Marqi.Fonts
     {
         IEnumerable<Font> Fonts { get; }
 
-        Task<Font> LoadFont(string file);
+        Font LoadFont(string file);
     }
 }

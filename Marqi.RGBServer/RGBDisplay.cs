@@ -1,21 +1,19 @@
-﻿using Marqi.Display;
-using Marqi.Fonts;
-using Microsoft.Extensions.Logging;
+﻿using Marqi.Common;
+using Marqi.Common.Display;
+using Marqi.Common.Fonts;
 
-namespace Marqi.RGB
+namespace Marqi.RGBServer
 {
     public class RGBDisplay : IDisplay
     {
-        private ILogger _log;
 
         private readonly IFontFactory<RGBLedFont> _fontFactory;
 
         private readonly RGBLedMatrix _matrix;
         private readonly RGBLedCanvas _canvas;
 
-        public RGBDisplay(ILogger<RGBDisplay> logger, IFontFactory<RGBLedFont> fontFactory)
+        public RGBDisplay(IFontFactory<RGBLedFont> fontFactory)
         {
-            _log = logger;
             _fontFactory = fontFactory;
             _matrix = new RGBLedMatrix(new RGBLedMatrixOptions
             {

@@ -1,6 +1,6 @@
 using System.IO;
 using System.Threading.Tasks;
-using Marqi.Display;
+using Marqi.Common.Display;
 
 namespace Marqi.WebRGB
 {

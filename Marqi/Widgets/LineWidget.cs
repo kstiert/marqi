@@ -1,6 +1,5 @@
-﻿using System;
-using Marqi.Display;
-using Marqi.RGB;
+﻿using Marqi.Common.Display;
+using Marqi.Common;
 
 namespace Marqi.Widgets
 {

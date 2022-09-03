@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Marqi.Common.Display;
 
 namespace Marqi.Display
 {
@@ -35,49 +36,52 @@ namespace Marqi.Display
         
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            while (!stoppingToken.IsCancellationRequested)
+            await Task.Run(() => 
             {
-                try
+                while (!stoppingToken.IsCancellationRequested)
                 {
-                    _logger.LogTrace("Updating widgets");
-                    var render = false;
-                    foreach (var widget in _widgets)
-                    {                       
-                        if (widget.Update())
-                        {
-                            render = true;
-                        }
-                    }
-                    
-                    if (render)
+                    try
                     {
-                        _logger.LogTrace("Rendering widgets");
+                        _logger.LogTrace("Updating widgets");
+                        var render = false;
                         foreach (var widget in _widgets)
-                        {
-                            foreach(var display in _displays)
+                        {                       
+                            if (widget.Update())
                             {
-                                widget.Render(display);
+                                render = true;
                             }
                         }
-
-                        foreach(var display in _displays)
+                        
+                        if (render)
                         {
-                            display.Swap();
-                            display.Clear();
+                            _logger.LogTrace("Rendering widgets");
+                            foreach (var widget in _widgets)
+                            {
+                                foreach(var display in _displays)
+                                {
+                                    widget.Render(display);
+                                }
+                            }
+
+                            foreach(var display in _displays)
+                            {
+                                display.Swap();
+                                display.Clear();
+                            }
+                        }
+                        else
+                        {
+                            _logger.LogTrace("Skipping render");
                         }
                     }
-                    else
+                    catch(Exception e)
                     {
-                        _logger.LogTrace("Skipping render");
+                        _logger.LogError(e, "Display manager error");
                     }
+                    Thread.Sleep(500);
+                    //await Task.Delay(500, stoppingToken);
                 }
-                catch(Exception e)
-                {
-                    _logger.LogError(e, "Display manager error");
-                }
-
-                await Task.Delay(500, stoppingToken);
-            }
+            });
         }
     }
 }
