@@ -1,4 +1,6 @@
-﻿using Marqi.Common.Fonts;
+﻿using System;
+using System.Collections.Generic;
+using Marqi.Common.Fonts;
 
 namespace Marqi.RGBServer
 {
@@ -13,6 +15,7 @@ namespace Marqi.RGBServer
 
         public void LoadFont(int id, string file)
         {
+            Console.WriteLine($"Loading font {file}");
             _fonts[id] = new RGBLedFont(file);      
         }
     }

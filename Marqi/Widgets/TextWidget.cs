@@ -1,6 +1,6 @@
-﻿using Marqi.Common.Display;
+﻿using Marqi.Common;
+using Marqi.Common.Display;
 using Marqi.Common.Fonts;
-using Marqi.Common;
 
 namespace Marqi.Widgets
 {

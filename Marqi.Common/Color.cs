@@ -2,8 +2,10 @@
 namespace Marqi.Common
 {
     [Serializable]
-    public struct Color
+    public class Color
     {
+        public Color() {}
+
         public Color (int r, int g, int b)
         {
             R = (byte)r;
@@ -16,8 +18,8 @@ namespace Marqi.Common
             G = g;
             B = b;
         }
-        public byte R;
-        public byte G;
-        public byte B;
+        public byte R { get; set; }
+        public byte G { get; set; }
+        public byte B { get; set; }
     }
 }

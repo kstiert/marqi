@@ -31,7 +31,7 @@ namespace Marqi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //services.AddSignalR();
+            services.AddSignalR();
             services.AddHttpClient();
 
             services.AddEasyCaching(c => {
@@ -51,8 +51,12 @@ namespace Marqi
             services.AddSingleton<OpenWeather>();
 
             services.AddSingleton<IFontManager, FontManager>();
-            //services.AddBDFFontSupport();
-            //services.AddWebRGBDisplay();
+
+            if(!string.IsNullOrEmpty(Configuration["EnableWebRGB"]))
+            {
+                services.AddBDFFontSupport();
+                services.AddWebRGBDisplay();
+            }
 
             if(!string.IsNullOrEmpty(Configuration["EnableRGB"]))
             {
@@ -61,9 +65,8 @@ namespace Marqi
             }
 
             services.AddSingleton<IWidgetFactory, DefaultWidgetFactory>();
-            //services.AddSingleton<IWidgetFactory, SimpleWidgets>();
             services.AddHostedService<DisplayManager>();
-            //services.AddHostedService<DataSourceRefreser>();
+            services.AddHostedService<DataSourceRefreser>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
