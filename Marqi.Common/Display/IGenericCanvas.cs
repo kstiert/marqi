@@ -1,4 +1,4 @@
-namespace Marqi.Display
+namespace Marqi.Common.Display
 {
     public interface IGenericCanvas : ICanvas
     {

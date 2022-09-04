@@ -1,4 +1,4 @@
-using Marqi.Fonts;
+using Marqi.Common.Fonts;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Orvid.Graphics.FontSupport.bdf

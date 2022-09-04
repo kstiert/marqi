@@ -1,10 +1,8 @@
-﻿using Marqi.Fonts;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Marqi.Common.Fonts;
 
-namespace Marqi.RGB
+namespace Marqi.RGBServer
 {
     public class RGBFontFactory : IFontFactory<RGBLedFont>
     {
@@ -15,12 +13,10 @@ namespace Marqi.RGB
             return _fonts[id];
         }
 
-        public Task LoadFont(int id, string file)
+        public void LoadFont(int id, string file)
         {
-            return Task.Run(() => 
-            {
-                _fonts[id] = new RGBLedFont(file);
-            });        
+            Console.WriteLine($"Loading font {file}");
+            _fonts[id] = new RGBLedFont(file);      
         }
     }
 }

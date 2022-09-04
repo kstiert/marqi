@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using Marqi.Common;
 
-namespace Marqi.RGB
+namespace Marqi.RGBServer
 {
     public class RGBLedFont : IDisposable
     {

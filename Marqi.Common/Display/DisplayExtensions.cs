@@ -1,7 +1,6 @@
-using Marqi.RGB;
 using SixLabors.ImageSharp.PixelFormats;
 
-namespace Marqi.Display
+namespace Marqi.Common.Display
 {
     public static class DisplayExtensions
     {

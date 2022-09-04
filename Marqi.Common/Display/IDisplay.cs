@@ -1,8 +1,6 @@
-﻿using Marqi.Fonts;
-using Marqi.RGB;
-using SixLabors.ImageSharp.PixelFormats;
+﻿using Marqi.Common.Fonts;
 
-namespace Marqi.Display
+namespace Marqi.Common.Display
 {
     public interface IDisplay
     {

@@ -1,5 +1,6 @@
 using System.IO;
 using System.Threading.Tasks;
+using Marqi.Common;
 using Marqi.Options;
 using Marqi.V1.Hubs;
 using Microsoft.AspNetCore.SignalR;
@@ -25,8 +26,8 @@ namespace Marqi.WebRGB
         {
             _displayOptions = options.Value;
             _hubContext = hubContext;
-            _screen = new Image<Rgba32>(Width, Height, Color.Black);
-            _buffer = new Image<Rgba32>(Width, Height, Color.Black);
+            _screen = new Image<Rgba32>(Width, Height, SixLabors.ImageSharp.Color.Black);
+            _buffer = new Image<Rgba32>(Width, Height, SixLabors.ImageSharp.Color.Black);
         }
 
         public int Width { get { return _displayOptions.Columns * _displayOptions.PixelSize; } }
@@ -41,7 +42,7 @@ namespace Marqi.WebRGB
             _ = _hubContext.Clients.All.SendAsync("BufferChanged");
         }
 
-        public void SetPixel(int x, int y, RGB.Color color)
+        public void SetPixel(int x, int y, Common.Color color)
         {
             if(x >= _displayOptions.Columns || y >= _displayOptions.Rows || x < 0 || y < 0)
             {
@@ -49,7 +50,7 @@ namespace Marqi.WebRGB
             }
             var halfSize = _displayOptions.PixelSize / 2;
             var pixel = new EllipsePolygon(new PointF(x * _displayOptions.PixelSize + halfSize, y * _displayOptions.PixelSize + halfSize), new SizeF(halfSize, halfSize));
-            _buffer.Mutate(c => c.Fill(Color.FromRgb(color.R, color.G, color.B), pixel));
+            _buffer.Mutate(c => c.Fill(SixLabors.ImageSharp.Color.FromRgb(color.R, color.G, color.B), pixel));
         }
 
         public async Task<Stream> GetScreenStream()
@@ -62,12 +63,12 @@ namespace Marqi.WebRGB
 
         public void Clear()
         {
-            _buffer.Mutate(i => i.Fill(Color.Black));
+            _buffer.Mutate(i => i.Fill(SixLabors.ImageSharp.Color.Black));
         }
 
-        public void Fill(RGB.Color color)
+        public void Fill(Common.Color color)
         {
-            _buffer.Mutate(i => i.Fill(Color.FromRgb(color.R, color.G, color.B)));
+            _buffer.Mutate(i => i.Fill(SixLabors.ImageSharp.Color.FromRgb(color.R, color.G, color.B)));
         }
     }
 }

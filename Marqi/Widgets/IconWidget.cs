@@ -1,4 +1,4 @@
-using Marqi.Display;
+using Marqi.Common.Display;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 

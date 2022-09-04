@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace Marqi.RGB
+namespace Marqi.RGBServer
 {
     public class RGBLedMatrix : IDisposable
     {

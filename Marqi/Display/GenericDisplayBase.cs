@@ -1,8 +1,8 @@
 using System;
-using Marqi.Fonts;
-using Marqi.RGB;
+using Marqi.Common.Display;
+using Marqi.Common.Fonts;
+using Marqi.Common;
 using Orvid.Graphics.FontSupport.bdf;
-using SixLabors.ImageSharp.PixelFormats;
 
 namespace Marqi.Display
 {
@@ -38,7 +38,7 @@ namespace Marqi.Display
             _canvas.Swap();
         }
 
-        public void DrawLine(int x0, int y0, int x1, int y1, RGB.Color color)
+        public void DrawLine(int x0, int y0, int x1, int y1, Common.Color color)
         {
             if (Math.Abs(y1 - y0) < Math.Abs(x1 - x0))
             {
@@ -64,7 +64,7 @@ namespace Marqi.Display
             }
         }
 
-        public void DrawText(Font font, int x, int y, RGB.Color color, string text, int spacing = 0, bool vertical = false)
+        public void DrawText(Font font, int x, int y, Common.Color color, string text, int spacing = 0, bool vertical = false)
         {
             if (string.IsNullOrEmpty(text))
             {
@@ -99,7 +99,7 @@ namespace Marqi.Display
             }
         }
 
-        private void DrawLineLow(int x0, int y0, int x1, int y1, RGB.Color color)
+        private void DrawLineLow(int x0, int y0, int x1, int y1, Common.Color color)
         {
             var dx = x1 - x0;
             var dy = y1 - y0;
@@ -124,7 +124,7 @@ namespace Marqi.Display
             }
         }
 
-        private void DrawLineHigh(int x0, int y0, int x1, int y1, RGB.Color color)
+        private void DrawLineHigh(int x0, int y0, int x1, int y1, Common.Color color)
         {
             var dx = x1 - x0;
             var dy = y1 - y0;

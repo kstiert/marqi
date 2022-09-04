@@ -1,5 +1,8 @@
-﻿namespace Marqi.Fonts
+﻿using System;
+
+namespace Marqi.Common.Fonts
 {
+    [Serializable]
     public class Font
     {
         public Font(int id)

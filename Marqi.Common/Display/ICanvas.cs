@@ -1,6 +1,4 @@
-using Marqi.RGB;
-
-namespace Marqi.Display
+namespace Marqi.Common.Display
 {
     public interface ICanvas
     {

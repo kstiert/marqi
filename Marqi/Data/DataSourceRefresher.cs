@@ -7,18 +7,21 @@ using System.Threading.Tasks;
 using Cronos;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Marqi.Data
 {
     public class DataSourceRefreser : IHostedService
     {
+        private readonly ILogger _log;
+
         private readonly IDictionary<int, Timer> _timmers = new Dictionary<int, Timer>();
 
         private readonly IEnumerable<IDataSource> _dataSources;
 
         private readonly TimeZoneInfo _timeZoneInfo;
 
-        public DataSourceRefreser(IServiceProvider services)
+        public DataSourceRefreser(ILogger<DataSourceRefreser> logger, IServiceProvider services)
         {
             _dataSources = Assembly.GetExecutingAssembly()
                             .GetTypes()
@@ -26,6 +29,8 @@ namespace Marqi.Data
                             .Select(t => (IDataSource)services.GetService(t))
                             .Where(source => source != null)
                             .ToList();
+            _log = logger;
+            _log.LogTrace($"Discovered {_dataSources.Count()} scheduled datasources");
 
             _timeZoneInfo = TimeZoneInfo.Local;
         }

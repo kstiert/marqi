@@ -51,8 +51,12 @@ namespace Marqi
             services.AddSingleton<OpenWeather>();
 
             services.AddSingleton<IFontManager, FontManager>();
-            services.AddBDFFontSupport();
-            services.AddWebRGBDisplay();
+
+            if(!string.IsNullOrEmpty(Configuration["EnableWebRGB"]))
+            {
+                services.AddBDFFontSupport();
+                services.AddWebRGBDisplay();
+            }
 
             if(!string.IsNullOrEmpty(Configuration["EnableRGB"]))
             {

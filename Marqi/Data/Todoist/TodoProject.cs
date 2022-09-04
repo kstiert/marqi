@@ -27,9 +27,16 @@ namespace Marqi.Data.Todoist
         public async Task Refresh()
         {
             _logger.LogDebug("Refreshing Todoist");
-            var items = await _client.Items.GetAsync();
-            Update(items.Where(i => !(i.IsChecked ?? true)).Select(i => new Todo { Name = i.Content }).ToList());
-            _logger.LogDebug("Completed refreshing Todoist");
+            try
+            {
+                var items = await _client.Items.GetAsync();
+                Update(items.Where(i => !(i.IsChecked ?? true)).Select(i => new Todo { Name = i.Content }).ToList());
+                _logger.LogDebug("Completed refreshing Todoist");
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e, "Failed to refresh Todoist");
+            }
         }
     }
 }

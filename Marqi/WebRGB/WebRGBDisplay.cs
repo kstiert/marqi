@@ -1,6 +1,5 @@
 using Marqi.Display;
-using Marqi.Fonts;
-using Marqi.RGB;
+using Marqi.Common.Fonts;
 using Orvid.Graphics.FontSupport.bdf;
 
 namespace Marqi.WebRGB
