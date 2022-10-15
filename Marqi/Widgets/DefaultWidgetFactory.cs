@@ -69,11 +69,13 @@ namespace Marqi.Widgets
                 Font = font,
                 Position = new Position { X = 0, Y = 23 }
             };
-            var task = new TextWidget
+            var task = new ScrollTextWdiget
             {
                 Color = new Color(0, 122, 255),
                 Font = font,
-                Position = new Position { X = 0, Y = 31 }
+                Position = new Position { X = 0, Y = 31 },
+                ScrollTime = 8,
+                FontWidth = 5
             };
             var timer = new TextWidget
             {
@@ -103,7 +105,7 @@ namespace Marqi.Widgets
                     name.Text = e?.Name ?? "";
                 }
             };
-            var todo = new ListTimer<Todo>(_loggerFactory.CreateLogger<ListTimer<Todo>>(), _todoProject, 5)
+            var todo = new ListTimer<Todo>(_loggerFactory.CreateLogger<ListTimer<Todo>>(), _todoProject, 10)
             {
                 Update = (t) =>
                 {

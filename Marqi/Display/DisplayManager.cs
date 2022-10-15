@@ -46,7 +46,7 @@ namespace Marqi.Display
                         var render = false;
                         foreach (var widget in _widgets)
                         {                       
-                            if (widget.Update())
+                            if (widget.Update(TimeSpan.FromMilliseconds(500)))
                             {
                                 render = true;
                             }
@@ -78,7 +78,7 @@ namespace Marqi.Display
                     {
                         _logger.LogError(e, "Display manager error");
                     }
-                    Thread.Sleep(500);
+                    Thread.Sleep(100);
                     //await Task.Delay(500, stoppingToken);
                 }
             });

@@ -1,4 +1,5 @@
-﻿using Marqi.Common.Display;
+﻿using System;
+using Marqi.Common.Display;
 
 namespace Marqi.Widgets
 {
@@ -15,7 +16,7 @@ namespace Marqi.Widgets
 
         public abstract void Render(IDisplay display);
 
-        public virtual bool Update()
+        public virtual bool Update(TimeSpan delta)
         {
             if(_dirty)
             {

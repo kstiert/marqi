@@ -1,4 +1,5 @@
-﻿using Marqi.Common.Display;
+﻿using System;
+using Marqi.Common.Display;
 
 namespace Marqi.Widgets
 {
@@ -6,7 +7,7 @@ namespace Marqi.Widgets
     {
         Position Position { get; set; }
 
-        bool Update();
+        bool Update(TimeSpan delta);
 
         void Render(IDisplay display);
     }

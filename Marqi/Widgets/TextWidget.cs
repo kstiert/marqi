@@ -13,7 +13,7 @@ namespace Marqi.Widgets
         public int? Truncate { get; set; }
 
         private string _text;
-        public string Text
+        public virtual string Text
         {
             get
             {
