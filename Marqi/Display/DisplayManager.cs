@@ -46,7 +46,7 @@ namespace Marqi.Display
                         var render = false;
                         foreach (var widget in _widgets)
                         {                       
-                            if (widget.Update(TimeSpan.FromMilliseconds(500)))
+                            if (widget.Update(TimeSpan.FromMilliseconds(100)))
                             {
                                 render = true;
                             }
