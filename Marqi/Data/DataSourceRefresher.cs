@@ -1,11 +1,11 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Cronos;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -15,7 +15,7 @@ namespace Marqi.Data
     {
         private readonly ILogger _log;
 
-        private readonly IDictionary<int, Timer> _timmers = new Dictionary<int, Timer>();
+        private readonly IDictionary<int, Timer> _timers = new ConcurrentDictionary<int, Timer>();
 
         private readonly IEnumerable<IDataSource> _dataSources;
 
@@ -59,18 +59,18 @@ namespace Marqi.Data
             }
             var id = Random.Shared.Next();
 
-            _timmers[id] = new Timer(async s => {
+            _timers[id] = new Timer(async s => {
                 var src = (IDataSource)s;
                 await src.Refresh();
                 await ScheduleJob(src, cancellationToken);
-                _timmers[id].Dispose();
-                _timmers.Remove(id);
+                _timers[id].Dispose();
+                _timers.Remove(id);
             }, source, (int)delay.TotalMilliseconds, Timeout.Infinite);
         }
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            foreach(var t in _timmers.Values)
+            foreach(var t in _timers.Values)
             {
                 t.Dispose();
             }
