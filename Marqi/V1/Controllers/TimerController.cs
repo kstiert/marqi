@@ -1,5 +1,6 @@
 using Marqi.Data.Timers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,10 +12,12 @@ namespace Marqi.V1.Controllers
     public class TimerController : ControllerBase
     {
         private readonly TimerCollection _timers;
+        private readonly ILogger _logger;
 
-        public TimerController(TimerCollection timers)
+        public TimerController(ILogger<TimerController> logger, TimerCollection timers)
         {
             _timers = timers;
+            _logger = logger;
         }
 
         [HttpGet()]
@@ -24,19 +27,22 @@ namespace Marqi.V1.Controllers
         }
 
         [HttpGet("create")]
-        public ActionResult Create([FromQuery]string name, [FromQuery]string time)
+        public ActionResult Create([FromQuery]string name, [FromQuery]string time, [FromQuery]string end)
         {
             TimeSpan timeSpan;
-            if(TimeSpan.TryParse(time, out timeSpan))
+            TimeOnly endTime;
+            if(!string.IsNullOrEmpty(end) && TimeOnly.TryParse(end, out endTime))
             {
-                _timers.CreateTimer(name, timeSpan);
-                _ = _timers.Refresh();
-                return Ok();
+                timeSpan =  DateOnly.FromDateTime(DateTime.Today).ToDateTime(endTime) - DateTime.Now;
             }
-            else
+            else if(!TimeSpan.TryParse(time, out timeSpan))
             {
                 return BadRequest();
             }
+            
+            _timers.CreateTimer(name, timeSpan);
+            _ = _timers.Refresh();
+            return Ok();
         }
 
         [HttpGet("cancel")]
