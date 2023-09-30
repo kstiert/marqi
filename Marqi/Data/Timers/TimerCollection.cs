@@ -19,6 +19,11 @@ namespace Marqi.Data.Timers
 
         public void CreateTimer(string name, TimeSpan time)
         {
+            CreateTimer(name, DateTime.Now + time);
+        }
+
+        public void CreateTimer(string name, DateTime end, bool displayText = false)
+        {
             var key = MakeCacheKey(name);
 
             if(!_cache.Exists(key))
@@ -27,9 +32,10 @@ namespace Marqi.Data.Timers
                     {
                         Name = name,
                         Start = DateTime.Now,
-                        End = DateTime.Now + time,
-                        Duration = time
-                    }, time + TimeSpan.FromDays(1));
+                        End = end,
+                        Duration = end - DateTime.Now,
+                        DisplayText = displayText
+                    }, end - DateTime.Now + TimeSpan.FromDays(1));
             }
         }
 

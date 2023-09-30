@@ -27,20 +27,27 @@ namespace Marqi.V1.Controllers
         }
 
         [HttpGet("create")]
-        public ActionResult Create([FromQuery]string name, [FromQuery]string time, [FromQuery]string end)
+        public ActionResult Create([FromQuery]string name, [FromQuery]string time, [FromQuery]string end, [FromQuery]int? month, [FromQuery]int? day, [FromQuery] int? year)
         {
             TimeSpan timeSpan;
             TimeOnly endTime;
-            if(!string.IsNullOrEmpty(end) && TimeOnly.TryParse(end, out endTime))
+            if(day.HasValue)
             {
-                timeSpan =  DateOnly.FromDateTime(DateTime.Today).ToDateTime(endTime) - DateTime.Now;
+                _timers.CreateTimer(name, new DateTime(year ?? DateTime.Now.Year, month ?? DateTime.Now.Month, day.Value), true);
+            }
+            else if(!string.IsNullOrEmpty(end) && TimeOnly.TryParse(end, out endTime))
+            {
+                _timers.CreateTimer(name, DateOnly.FromDateTime(DateTime.Today).ToDateTime(endTime));
             }
             else if(!TimeSpan.TryParse(time, out timeSpan))
             {
+                _timers.CreateTimer(name, timeSpan);
+            }
+            else
+            {
                 return BadRequest();
             }
-            
-            _timers.CreateTimer(name, timeSpan);
+
             _ = _timers.Refresh();
             return Ok();
         }

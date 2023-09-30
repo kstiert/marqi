@@ -12,12 +12,17 @@ namespace Marqi.Data.Timers
 
         public TimeSpan Duration { get; set; }
 
+        public TimeSpan Elapsed { get { return DateTime.Now - Start; } }
+
+        public TimeSpan Remaining { get { return End - DateTime.Now; } }
+
+        public bool DisplayText { get; set; }
+
         public double Progress
         {
             get
             {
-                var elapsed = DateTime.Now - Start;
-                return Math.Min(elapsed/Duration, 1);
+                return Math.Min(Elapsed/Duration, 1);
             }
         }
 

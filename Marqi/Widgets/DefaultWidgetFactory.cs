@@ -91,6 +91,12 @@ namespace Marqi.Widgets
                 Width = 32,
                 Height = 3
             };
+            var timerText = new TextWidget
+            {
+                Color = new Color(255, 0, 0),
+                Font = fontBigBold,
+                Position = new Position { X = 14, Y = 10 }
+            };
             widgets.Add(new ClockWidget
             {
                 Color = new Color(255, 0, 0),
@@ -117,7 +123,15 @@ namespace Marqi.Widgets
                 Update = (t) =>
                 {
                     timer.Text = t?.Name ?? "";
-                    progress.Progress = t?.Progress ?? 0;
+                    if(t != null && t.DisplayText)
+                    {
+                        timerText.Text = $"{(t.Remaining.Days + 1).ToString().PadLeft(3)}";
+                    }
+                    else
+                    {
+                        timerText.Text = string.Empty;
+                        progress.Progress = t?.Progress ?? 0;
+                    }
                 }
             };
             var temps = new ListTimer<WeatherReport>(_loggerFactory.CreateLogger<ListTimer<WeatherReport>>(), _openWeather, 5)
@@ -140,6 +154,7 @@ namespace Marqi.Widgets
             widgets.Add(name);
             widgets.Add(task);
             widgets.Add(progress);
+            widgets.Add(timerText);
             widgets.Add(timer);
             _ = todo.Refresh();
             _ = cal.Refresh();
