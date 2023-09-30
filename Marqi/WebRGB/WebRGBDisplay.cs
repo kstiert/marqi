@@ -1,6 +1,7 @@
 using Marqi.Display;
 using Marqi.Common.Fonts;
 using Orvid.Graphics.FontSupport.bdf;
+using Microsoft.Extensions.Logging;
 
 namespace Marqi.WebRGB
 {
@@ -8,7 +9,7 @@ namespace Marqi.WebRGB
     {
         private readonly IWebRGBCanvas _canvas;
 
-        public WebRGBDisplay(IFontFactory<BDFFontContainer> fontFactory, IWebRGBCanvas canvas) : base(fontFactory, canvas)
+        public WebRGBDisplay(ILogger<WebRGBDisplay> logger, IFontFactory<BDFFontContainer> fontFactory, IWebRGBCanvas canvas) : base(logger, fontFactory, canvas)
         {
             _canvas = canvas;
         }

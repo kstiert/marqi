@@ -3,17 +3,21 @@ using Marqi.Common.Display;
 using Marqi.Common.Fonts;
 using Marqi.Common;
 using Orvid.Graphics.FontSupport.bdf;
+using Microsoft.Extensions.Logging;
 
 namespace Marqi.Display
 {
     public abstract class GenericDisplayBase : IDisplay
     {
+        private readonly ILogger _log;
+
         private readonly IFontFactory<BDFFontContainer> _fontFactory;
 
         private readonly IGenericCanvas _canvas;
 
-        protected GenericDisplayBase(IFontFactory<BDFFontContainer> fontFactory, IGenericCanvas canvas)
+        protected GenericDisplayBase(ILogger logger, IFontFactory<BDFFontContainer> fontFactory, IGenericCanvas canvas)
         {
+            _log = logger;
             _fontFactory = fontFactory;
             _canvas = canvas;
         }
@@ -75,27 +79,34 @@ namespace Marqi.Display
             var offset = 0;
             foreach (var c in text)
             {
-                var glyph = bdf.getGlyph(c);
-                var glyphBox = glyph.getBbx();
-                var fHeight = glyphBox.height;
-                var fData = glyph.getData();
-                var scan = fData.Length / fHeight;
-                var bx = x + offset + glyphBox.x;
-                var by = y - fHeight - glyphBox.y;
-
-                for (int k = 0; k < fHeight; k++)
+                try
                 {
-                    var offsetLine = k * scan;
-                    for (int j = 0; j < scan; j++)
+                    var glyph = bdf.getGlyph(c);
+                    var glyphBox = glyph.getBbx();
+                    var fHeight = glyphBox.height;
+                    var fData = glyph.getData();
+                    var scan = fData.Length / fHeight;
+                    var bx = x + offset + glyphBox.x;
+                    var by = y - fHeight - glyphBox.y;
+
+                    for (int k = 0; k < fHeight; k++)
                     {
-                        var fPixel = fData[offsetLine + j];
-                        if (fPixel != 0)
+                        var offsetLine = k * scan;
+                        for (int j = 0; j < scan; j++)
                         {
-                            SetPixel(bx + j, by + k, color);
+                            var fPixel = fData[offsetLine + j];
+                            if (fPixel != 0)
+                            {
+                                SetPixel(bx + j, by + k, color);
+                            }
                         }
                     }
+                    offset += glyph.getDWidth().width;
                 }
-                offset += glyph.getDWidth().width;
+                catch (Exception) 
+                {
+                    _log.LogTrace($"Glyph error: {c} in {text}");
+                }            
             }
         }
 
