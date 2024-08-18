@@ -1,4 +1,5 @@
-﻿using Marqi.Common;
+﻿using System;
+using Marqi.Common;
 
 namespace Marqi.Data.GCalendar
 {
@@ -9,5 +10,7 @@ namespace Marqi.Data.GCalendar
         public string Name { get; set; }
 
         public Color Color { get; set; }
+
+        public DateTime UtcTime { get; set; }
     }
 }

@@ -46,7 +46,10 @@ namespace Marqi.Data.GCalendar
                 using (var client = _httpFactory.CreateClient())
                 {
                     var tasks = _options.Calendars.Select(GetCalendarEvents);
-                    var events = (await Task.WhenAll(tasks)).SelectMany(gce => gce).ToList();
+                    var events = (await Task.WhenAll(tasks))
+                        .SelectMany(gce => gce)
+                        .OrderBy(e => e.UtcTime)
+                        .ToList();
                     Update(events);
                 }
 
@@ -83,7 +86,7 @@ namespace Marqi.Data.GCalendar
                 color = hexColor.ColorFromHex();
             }
 
-            return new GoogleCalendarEvent { Name = ev.Summary, Start = datetime, Color = color };
+            return new GoogleCalendarEvent { Name = ev.Summary, Start = datetime, Color = color, UtcTime = o.Period.StartTime.Value};
         }
 
         private async Task<List<GoogleCalendarEvent>> GetCalendarEvents(GoogleCalendarConfig config)
@@ -92,7 +95,6 @@ namespace Marqi.Data.GCalendar
             var cal = Calendar.Load(await calResp.Content.ReadAsStreamAsync());
 
             return cal.GetOccurrences(DateTime.Today, DateTime.Today.AddDays(14))
-            .OrderBy(o => o.Period.StartTime)
             .Select(o => MakeEvent(o, config.HexColor)).ToList();
 
         }
