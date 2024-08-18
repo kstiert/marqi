@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Marqi.Common;
 
 namespace Marqi.Data.GCalendar
 {
@@ -9,5 +7,7 @@ namespace Marqi.Data.GCalendar
         public string Start { get; set; }
 
         public string Name { get; set; }
+
+        public Color Color { get; set; }
     }
 }

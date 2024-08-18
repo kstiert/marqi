@@ -108,7 +108,9 @@ namespace Marqi.Widgets
                 Update = (e) =>
                 {
                     datetime.Text = e?.Start ?? "";
+                    datetime.Color = e?.Color ?? new Color(255, 0, 0);
                     name.Text = e?.Name ?? "";
+                    name.Color = e?.Color ?? new Color(255, 0, 0);
                 }
             };
             var todo = new ListTimer<Todo>(_loggerFactory.CreateLogger<ListTimer<Todo>>(), _todoProject, 10)

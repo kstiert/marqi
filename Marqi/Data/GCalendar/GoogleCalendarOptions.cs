@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace Marqi.Data.GCalendar
 {
     public class GoogleCalendarOptions
     {
-        public string Url { get; set; }
+        public List<GoogleCalendarConfig> Calendars { get; set; }
     }
 }

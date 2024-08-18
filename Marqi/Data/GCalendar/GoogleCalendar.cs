@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Ical.Net;
 using Ical.Net.CalendarComponents;
 using Ical.Net.DataTypes;
+using Marqi.Common;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -36,13 +37,19 @@ namespace Marqi.Data.GCalendar
 
             try
             {
-                var calResp = await _httpFactory.CreateClient().GetAsync(_options.Url);
-                var cal = Calendar.Load(await calResp.Content.ReadAsStreamAsync());
-                var events = cal.GetOccurrences(DateTime.Today, DateTime.Today.AddDays(14))
-                                .OrderBy(o => o.Period.StartTime)
-                                .Select(MakeEvent).ToList();
+                if(_options.Calendars == null || !_options.Calendars.Any())
+                {
+                    _logger.LogWarning("No Urls configured for google calendar");
+                    return;
+                }
+                
+                using (var client = _httpFactory.CreateClient())
+                {
+                    var tasks = _options.Calendars.Select(GetCalendarEvents);
+                    var events = (await Task.WhenAll(tasks)).SelectMany(gce => gce).ToList();
+                    Update(events);
+                }
 
-                Update(events);
                 _logger.LogDebug("Completed refreshing google calendar");
             }
             catch (Exception e)
@@ -51,7 +58,7 @@ namespace Marqi.Data.GCalendar
             }
         }
 
-        public GoogleCalendarEvent MakeEvent(Occurrence o)
+        private GoogleCalendarEvent MakeEvent(Occurrence o, string hexColor)
         {
             var ev = o.Source as CalendarEvent;
             var start = o.Period.StartTime.AsSystemLocal;
@@ -69,7 +76,25 @@ namespace Marqi.Data.GCalendar
                 datetime += $" {start.ToString("h:mmt")}";
             }
 
-            return new GoogleCalendarEvent { Name = ev.Summary, Start = datetime };
+            Color color = null;
+
+            if (!string.IsNullOrEmpty(hexColor))
+            {
+                color = hexColor.ColorFromHex();
+            }
+
+            return new GoogleCalendarEvent { Name = ev.Summary, Start = datetime, Color = color };
+        }
+
+        private async Task<List<GoogleCalendarEvent>> GetCalendarEvents(GoogleCalendarConfig config)
+        {
+            var calResp = await _httpFactory.CreateClient().GetAsync(config.Url);
+            var cal = Calendar.Load(await calResp.Content.ReadAsStreamAsync());
+
+            return cal.GetOccurrences(DateTime.Today, DateTime.Today.AddDays(14))
+            .OrderBy(o => o.Period.StartTime)
+            .Select(o => MakeEvent(o, config.HexColor)).ToList();
+
         }
     }
 }
