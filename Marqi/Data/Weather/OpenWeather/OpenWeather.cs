@@ -35,6 +35,12 @@ namespace Marqi.Data.Weather.OpenWeather
 
         public async Task Refresh()
         {
+            if (string.IsNullOrEmpty(_apiKey))
+            {
+                _logger.LogWarning("No OpenWeather ApiKey configured.");
+                return;
+            }
+
             try
             {
                 var resp = await _httpFactory.CreateClient().GetAsync($"http://api.openweathermap.org/data/2.5/weather?zip={_zips[0]}&units=imperial&appid={_apiKey}");

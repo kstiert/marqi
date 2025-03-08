@@ -17,7 +17,10 @@ namespace Marqi.Data.Todoist
         public TodoProject(ILogger<TodoProject> logger, IOptions<TodoOptions> options)
         {
             _logger = logger;
-            _client = new TodoistClient(options.Value.Token);
+            if (!string.IsNullOrEmpty(options.Value.Token))
+            {
+                _client = new TodoistClient(options.Value.Token);
+            }       
         }
 
         public string Cron => "*/1 * * * *";
@@ -26,6 +29,12 @@ namespace Marqi.Data.Todoist
 
         public async Task Refresh()
         {
+            if (_client == null)
+            {
+                _logger.LogWarning("No Todoist Token configured.");
+                return;
+            }
+
             _logger.LogDebug("Refreshing Todoist");
             try
             {

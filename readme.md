@@ -13,6 +13,14 @@ Marqi is a configurable dashboard intended to run on a Raspberry Pi attached to 
 * BDF Font Drawing
 * Image Drawing
 
+### Future
+
+Planned future work:
+
+* Home Assstant integration
+* IC2 hardware sensor support
+* Widget/DataSource configuration files
+
 ## Configuration
 
 Marqi uses the [default ASP.NET Core Configuration](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/) sources (environment variables, user secrets for development, `appsettings.json`, etc.)
@@ -23,7 +31,7 @@ Marqi uses the [default ASP.NET Core Configuration](https://learn.microsoft.com/
 | EnableRGB                 | bool   |  Enable/disable support for a physical RGB LED display | `false`      |
 | Display:Columns           | int    |  Number of columns on the display                      | **Required** |
 | Display:Rows              | int    |  Number of rows on the display                         | **Required** |
-| Display:PixelSize         | int    |  Size of each pixel (when WebRGB is enabled)           | none         |
+| Display:PixelSize         | int    |  Size of each LED 'pixel' (when WebRGB is enabled)     | `20`         |
 | OpenWeather:ApiKey        | string |  Api key for OpenWeather                               | none         |
 | OpenWeather:Zip           | string |  Zip code to retrieve weather data for                 | none         |
 | Todo:Token                | string |  Access token to retrieve Todoist tasks                | none         |

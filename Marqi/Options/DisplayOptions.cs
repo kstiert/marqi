@@ -6,6 +6,6 @@ namespace Marqi.Options
 
         public int Rows { get; set; }
 
-        public int PixelSize { get; set; }
+        public int PixelSize { get; set; } = 20;
     }
 }

@@ -52,13 +52,13 @@ namespace Marqi
 
             services.AddSingleton<IFontManager, FontManager>();
 
-            if(!string.IsNullOrEmpty(Configuration["EnableWebRGB"]))
+            if(Configuration.GetValue("EnableWebRGB", false))
             {
                 services.AddBDFFontSupport();
                 services.AddWebRGBDisplay();
             }
 
-            if(!string.IsNullOrEmpty(Configuration["EnableRGB"]))
+            if(Configuration.GetValue("EnableRGB", false))
             {
                 services.AddRGBFonts();   
                 services.AddRGBDisplay();
