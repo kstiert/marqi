@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Timer Management</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <link rel="stylesheet" href="css/timers.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Timer Management</h1>
+    <div class="form-group">
+      <label for="timerName">Timer Name</label>
+      <input type="text" id="timerName" placeholder="Enter timer name">
+    </div>
+    <div class="form-group">
+      <label for="timerType">Timer Type</label>
+      <select id="timerType" onchange="toggleTimerInputs()">
+        <option value="duration">Duration</option>
+        <option value="datetime">Date & Time</option>
+      </select>
+    </div>
+    <div id="durationInputs">
+      <div class="form-group">
+        <label for="durationPicker">Duration</label>
+        <input type="text" id="durationPicker" placeholder="Select duration">
+      </div>
+    </div>
+    <div id="datetimeInputs" style="display: none;">
+      <div class="form-group">
+        <label for="date">Date</label>
+        <input type="date" id="date">
+      </div>
+      <div class="form-group">
+        <label for="time">Time</label>
+        <input type="time" id="time">
+      </div>
+    </div>
+    <button onclick="createTimer()">Create Timer</button>
+    <div class="timer-list" id="timerList">
+      <!-- Timers will be dynamically added here -->
+    </div>
+  </div>
+  <script src="js/timers.js"></script>
+</body>
+</html>
