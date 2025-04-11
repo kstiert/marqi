@@ -9,9 +9,11 @@ using Marqi.Data.Weather.OpenWeather;
 using Marqi.Fonts;
 using Marqi.Common;
 using Microsoft.Extensions.Logging;
+using Marqi.Attributes;
 
-namespace Marqi.Widgets
+namespace Marqi.Widgets.Factory
 {
+    [WidgetFactory("default")]
     public class DefaultWidgetFactory : IWidgetFactory
     {
         private readonly ILogger _logger;

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Marqi.Widgets
+namespace Marqi.Widgets.Factory
 {
     public interface IWidgetFactory
     {
